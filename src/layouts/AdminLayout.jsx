@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { formatCount } from "../utils/formatters";
 import { Navigate, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { FiAlertTriangle, FiBriefcase, FiChevronLeft, FiChevronRight, FiFileText, FiHeart, FiHelpCircle, FiHome, FiLogOut, FiMail, FiMapPin, FiMenu, FiSettings, FiShield, FiSliders, FiTag, FiUser, FiUsers } from "react-icons/fi";
+import { FiAlertTriangle, FiBriefcase, FiChevronLeft, FiChevronRight, FiFileText, FiHeart, FiHelpCircle, FiHome, FiLogOut, FiMail, FiMapPin, FiMenu, FiSettings, FiShield, FiSliders, FiSun, FiMoon, FiTag, FiUser, FiUsers } from "react-icons/fi";
 import { AdminUIProvider } from "../admin/context/AdminUIContext";
 import AdminToast from "../admin/components/AdminToast";
 import AdminConfirmationModal from "../admin/components/AdminConfirmationModal";
@@ -55,6 +55,7 @@ export default function AdminLayout() {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const adminUserRaw = localStorage.getItem("adminUser") || sessionStorage.getItem("adminUser");
+  const [adminTheme, setAdminTheme] = useState(() => localStorage.getItem("adminTheme") || "light");
   const [userCounts, setUserCounts] = useState({ active: 0, deleted: 0 });
 
   useEffect(() => {
@@ -114,7 +115,7 @@ export default function AdminLayout() {
 
   return (
     <AdminUIProvider value={contextValue}>
-      <div className={`admin-shell ${sidebarCollapsed ? "collapsed" : ""}`}>
+      <div className={`admin-shell ${sidebarCollapsed ? "collapsed" : ""}`} data-admin-theme={adminTheme}>
         <header className="admin-navbar">
           <div className="admin-navbar-brand">
             <button type="button" className="admin-icon-btn admin-mobile-toggle" onClick={() => setSidebarOpen((value) => !value)} aria-label="Toggle sidebar">
@@ -128,6 +129,19 @@ export default function AdminLayout() {
           </div>
 
           <div className="admin-navbar-actions">
+            <button
+              type="button"
+              className="admin-icon-btn admin-theme-toggle"
+              onClick={() => {
+                const next = adminTheme === "light" ? "dark" : "light";
+                setAdminTheme(next);
+                localStorage.setItem("adminTheme", next);
+              }}
+              aria-label="Toggle admin theme"
+              title={adminTheme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+            >
+              {adminTheme === "light" ? <FiMoon /> : <FiSun />}
+            </button>
             <div className="admin-profile-pill">
               <div className="admin-profile-avatar">
                 <FiUser />
@@ -717,6 +731,56 @@ export default function AdminLayout() {
             padding: 12px 14px;
             font-size: 13px;
           }
+        }
+
+        /* Admin Dark Theme — scoped to admin-shell only */
+        .admin-shell[data-admin-theme="dark"] {
+          --bg-solid: #0c1727;
+          --text: #edf4ff;
+          --text-secondary: #8ea0bc;
+          --line: rgba(148, 163, 184, 0.16);
+          --bg-elevated: rgba(10, 20, 35, 0.78);
+          --surface-subtle: rgba(37, 99, 235, 0.12);
+          --surface-raised: rgba(9, 19, 35, 0.95);
+          --shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+          --brand-rgb: 15, 118, 110;
+          --brand-2-rgb: 37, 99, 235;
+          --success-rgb: 15, 157, 88;
+          --warning-rgb: 217, 119, 6;
+          --danger-rgb: 220, 38, 38;
+        }
+
+        .admin-shell[data-admin-theme="dark"] .admin-navbar {
+          background: #0a1525;
+          border-bottom-color: rgba(148, 163, 184, 0.12);
+        }
+
+        .admin-shell[data-admin-theme="dark"] .admin-sidebar {
+          background: #0a1525;
+          border-right-color: rgba(148, 163, 184, 0.12);
+        }
+
+        .admin-shell[data-admin-theme="dark"] .admin-profile-pill {
+          background: rgba(255, 255, 255, 0.04);
+          border-color: rgba(148, 163, 184, 0.12);
+        }
+
+        .admin-shell[data-admin-theme="dark"] .admin-toast {
+          background: #0c1727;
+          border-color: rgba(148, 163, 184, 0.16);
+        }
+
+        .admin-shell[data-admin-theme="dark"] .admin-icon-btn {
+          border-color: rgba(148, 163, 184, 0.12);
+        }
+
+        .admin-shell[data-admin-theme="dark"] .admin-theme-toggle {
+          border-color: rgba(148, 163, 184, 0.12);
+          color: #fbbf24;
+        }
+
+        .admin-shell[data-admin-theme="dark"] .admin-theme-toggle:hover {
+          background: rgba(251, 191, 36, 0.1);
         }
       `}</style>
     </AdminUIProvider>
