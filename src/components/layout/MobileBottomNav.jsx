@@ -5,10 +5,7 @@ import {
   FiPlus, 
   FiUser, 
   FiLogIn, 
-  FiUserPlus,
-  FiCompass,
-  FiHeart,
-  FiBell
+  FiUserPlus
 } from "react-icons/fi";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -17,7 +14,7 @@ import { useNavigation } from "../../context/NavigationContext";
 
 export default function MobileBottomNav({ onOpenLeft, onOpenRight }) {
   const navigate = useNavigate();
-  const { user, unreadCount, refreshNotifications } = useAuth();
+  const { user } = useAuth();
   const profilePath = user.loggedIn ? getProfilePath(user) : "/login";
   const { isEnabled } = useNavigation();
 
@@ -45,18 +42,6 @@ export default function MobileBottomNav({ onOpenLeft, onOpenRight }) {
             <span className="create-label">Join</span>
           </button>
         ) : null}
-
-        {user.loggedIn && (
-          <button type="button" className="nav-item" onClick={() => navigate("/notifications")}>
-            <span className="nav-icon notif-mobile-icon">
-              <FiBell />
-              {unreadCount > 0 && (
-                <span className="notif-mobile-badge">{unreadCount > 99 ? "99+" : unreadCount}</span>
-              )}
-            </span>
-            <span className="nav-label">Alerts</span>
-          </button>
-        )}
 
         {user.loggedIn && isEnabled("mobile_profile") ? (
           <button type="button" className="nav-item" onClick={() => navigate(profilePath)}>
@@ -129,28 +114,6 @@ export default function MobileBottomNav({ onOpenLeft, onOpenRight }) {
 
         .nav-item:hover .nav-icon {
           transform: translateY(-1px);
-        }
-
-        .notif-mobile-icon {
-          position: relative;
-          display: inline-flex;
-        }
-
-        .notif-mobile-badge {
-          position: absolute;
-          top: -4px;
-          right: -6px;
-          min-width: 16px;
-          height: 16px;
-          padding: 0 4px;
-          font-size: 9px;
-          font-weight: 700;
-          line-height: 16px;
-          text-align: center;
-          color: #fff;
-          background: #ef4444;
-          border-radius: 8px;
-          border: 1.5px solid var(--bg-solid);
         }
 
         .nav-item.active {
