@@ -1,0 +1,73 @@
+CREATE TABLE IF NOT EXISTS `donation_page_settings` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `hero_title_hi` VARCHAR(255) NOT NULL,
+  `hero_description_hi` TEXT NOT NULL,
+  `why_support_hi` LONGTEXT NOT NULL,
+  `donation_usage_hi` LONGTEXT NOT NULL,
+  `transparency_hi` LONGTEXT NOT NULL,
+  `thank_you_hi` LONGTEXT NOT NULL,
+  `hero_title_en` VARCHAR(255) NOT NULL,
+  `hero_description_en` TEXT NOT NULL,
+  `why_support_en` LONGTEXT NOT NULL,
+  `donation_usage_en` LONGTEXT NOT NULL,
+  `transparency_en` LONGTEXT NOT NULL,
+  `thank_you_en` LONGTEXT NOT NULL,
+  `qr_image` VARCHAR(255) NULL,
+  `upi_id` VARCHAR(150) NULL,
+  `account_holder_name` VARCHAR(150) NULL,
+  `donation_enabled` TINYINT(1) NOT NULL DEFAULT 1,
+  `show_qr` TINYINT(1) NOT NULL DEFAULT 1,
+  `show_upi` TINYINT(1) NOT NULL DEFAULT 1,
+  `seo_title` VARCHAR(255) NULL,
+  `seo_description` TEXT NULL,
+  `updated_by_admin_id` BIGINT UNSIGNED NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_updated_by_admin_id` (`updated_by_admin_id`),
+  CONSTRAINT `fk_donation_settings_admin` FOREIGN KEY (`updated_by_admin_id`) REFERENCES `admins` (`id`) ON UPDATE CASCADE ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `donation_submissions` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT UNSIGNED NULL,
+  `donor_name` VARCHAR(150) NOT NULL,
+  `upi_name` VARCHAR(150) NOT NULL,
+  `amount` DECIMAL(10,2) NOT NULL,
+  `payment_date` DATE NOT NULL,
+  `payment_time` TIME NOT NULL,
+  `transaction_id` VARCHAR(150) NULL,
+  `message` TEXT NULL,
+  `status` ENUM('pending', 'approved', 'rejected') NOT NULL DEFAULT 'pending',
+  `approved_by_admin_id` BIGINT UNSIGNED NULL,
+  `approved_at` DATETIME NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_user_id` (`user_id`),
+  KEY `idx_status` (`status`),
+  KEY `idx_amount` (`amount`),
+  KEY `idx_approved_by_admin_id` (`approved_by_admin_id`),
+  CONSTRAINT `fk_donation_submissions_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE ON DELETE SET NULL,
+  CONSTRAINT `fk_donation_submissions_admin` FOREIGN KEY (`approved_by_admin_id`) REFERENCES `admins` (`id`) ON UPDATE CASCADE ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `donation_page_settings` (
+  `hero_title_hi`, `hero_description_hi`, `why_support_hi`, `donation_usage_hi`, `transparency_hi`, `thank_you_hi`,
+  `hero_title_en`, `hero_description_en`, `why_support_en`, `donation_usage_en`, `transparency_en`, `thank_you_en`,
+  `donation_enabled`, `show_qr`, `show_upi`
+) VALUES (
+  'ConnectNKT को समर्थन दें',
+  'आपका समर्थन हमें प्लेटफॉर्म को चलाने और सभी के लिए बेहतर बनाने में मदद करता है',
+  'हमें क्यों समर्थन करें',
+  'दान का उपयोग कैसे किया जाता है',
+  'पारदर्शिता',
+  'धन्यवाद',
+  'Support ConnectNKT',
+  'Your support helps us keep the platform running and improving for everyone',
+  'Why Support Us',
+  'How Donations Are Used',
+  'Transparency',
+  'Thank You',
+  1, 1, 1
+);

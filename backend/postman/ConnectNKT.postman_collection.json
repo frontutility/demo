@@ -1,0 +1,57 @@
+{
+  "info": {
+    "name": "ConnectNKT API",
+    "_postman_id": "b2f6f06e-9f0f-4e5d-9df0-4f5c8a7f2d2c",
+    "description": "ConnectNKT backend collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{base_url}}/api/health", "host": ["{{base_url}}"], "path": ["api", "health"] }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"aman.nkt\",\n  \"password\": \"secret\"\n}" },
+        "url": { "raw": "{{base_url}}/api/auth/login", "host": ["{{base_url}}"], "path": ["api", "auth", "login"] }
+      }
+    },
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"New User\",\n  \"username\": \"new.user\",\n  \"email\": \"new@example.com\",\n  \"phone\": \"9876543210\",\n  \"password\": \"secret123\",\n  \"father_name\": \"Father Name\",\n  \"village_id\": 1,\n  \"dob\": \"2000-01-01\",\n  \"gender\": \"male\",\n  \"agree_terms\": true\n}" },
+        "url": { "raw": "{{base_url}}/api/auth/register", "host": ["{{base_url}}"], "path": ["api", "auth", "register"] }
+      }
+    },
+    {
+      "name": "Admin Dashboard",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": { "raw": "{{base_url}}/api/admin/dashboard", "host": ["{{base_url}}"], "path": ["api", "admin", "dashboard"] }
+      }
+    },
+    {
+      "name": "Admin Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"admin_rajkumar\",\n  \"password\": \"secret\"\n}" },
+        "url": { "raw": "{{base_url}}/api/admin/auth/login", "host": ["{{base_url}}"], "path": ["api", "admin", "auth", "login"] }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "base_url", "value": "http://localhost/connectnkt/backend" },
+    { "key": "token", "value": "" }
+  ]
+}

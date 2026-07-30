@@ -1,0 +1,10 @@
+.env
+.env.*
+# vendor/    
+logs/
+cache/
+tmp/
+*.log
+.vscode/
+.idea/
+.DS_Store
