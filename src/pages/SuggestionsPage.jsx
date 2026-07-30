@@ -67,7 +67,7 @@ export default function SuggestionsPage() {
 
     try {
       if (wasFollowing) {
-        await api.delete(`/api/users/${userId}/unfollow`);
+        await api.delete(`/api/users/${userId}/follow`);
       } else {
         await api.post(`/api/users/${userId}/follow`);
       }
@@ -132,7 +132,7 @@ export default function SuggestionsPage() {
                     handleFollow(u);
                   }}
                 >
-                  {followState[String(u.id)] ? "Following" : "Follow"}
+                  {followState[String(u.id)] ? "Following" : u.is_followed_by ? "Follow Back" : "Follow"}
                 </button>
               </div>
             ))

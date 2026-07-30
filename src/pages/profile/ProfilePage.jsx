@@ -84,6 +84,7 @@ export default function ProfilePage() {
   const [avatarError, setAvatarError] = useState("");
   const [profile, setProfile] = useState(null);
   const [followState, setFollowState] = useState(false);
+  const [followBack, setFollowBack] = useState(false);
   const [followLoading, setFollowLoading] = useState(false);
   const [status, setStatus] = useState("");
   const [statusType, setStatusType] = useState("success");
@@ -147,8 +148,9 @@ export default function ProfilePage() {
   useEffect(() => {
     if (typeof activeProfile?.is_following !== "undefined") {
       setFollowState(Boolean(activeProfile.is_following));
+      setFollowBack(Boolean(activeProfile.is_followed_by));
     }
-  }, [activeProfile?.is_following]);
+  }, [activeProfile?.is_following, activeProfile?.is_followed_by]);
 
   const { data: profilePosts = [], loading: postsLoading } = useApiResource(
     activeProfile?.id ? `/api/posts/user/${activeProfile.id}` : null,
@@ -158,6 +160,7 @@ export default function ProfilePage() {
   useEffect(() => {
     setProfile(null);
     setFollowState(false);
+    setFollowBack(false);
     setProfileImageDraft("");
     setAvatarError("");
   }, [profileKey]);
@@ -166,6 +169,7 @@ export default function ProfilePage() {
     if (!loadedUser) return;
     setProfile(loadedUser);
     setFollowState(Boolean(loadedUser.is_following));
+    setFollowBack(Boolean(loadedUser.is_followed_by));
     setProfileImageDraft("");
     setAvatarError("");
   }, [loadedUser]);
@@ -354,9 +358,13 @@ export default function ProfilePage() {
               followers_count: payload.followers_count ?? prev.followers_count,
               following_count: payload.following_count ?? prev.following_count,
               is_following: nextFollowState,
+              is_followed_by: typeof payload.is_followed_by !== "undefined" ? Boolean(payload.is_followed_by) : prev.is_followed_by,
             }
           : prev
       );
+      if (typeof payload.is_followed_by !== "undefined") {
+        setFollowBack(Boolean(payload.is_followed_by));
+      }
     } catch (error) {
       setFollowState(followState);
       setProfile((prev) =>
@@ -528,8 +536,8 @@ export default function ProfilePage() {
               </div>
               <div className="profile-actions-header">
                 {canFollow && (
-                  <button className="btn btn-primary follow-btn" onClick={handleFollowToggle} disabled={followLoading}>
-                    {followLoading ? "..." : followState ? "Unfollow" : "Follow"}
+                  <button className={`btn btn-primary follow-btn${followState ? " following" : ""}`} onClick={handleFollowToggle} disabled={followLoading}>
+                    {followLoading ? "..." : followState ? "Following" : followBack ? "Follow Back" : "Follow"}
                   </button>
                 )}
                 <button className="btn btn-secondary action-icon-btn" onClick={copyProfileLink} title="Share Profile">
@@ -993,17 +1001,17 @@ export default function ProfilePage() {
   cursor: not-allowed;
 }
 
-.follow-btn.unfollow {
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--line);
-}
+        .follow-btn.following {
+          background: transparent;
+          color: var(--text);
+          border: 1px solid var(--line);
+        }
 
-.follow-btn.unfollow:hover {
-  background: rgba(239, 68, 68, 0.04);
-  border-color: #ef4444;
-  color: #ef4444;
-}
+        .follow-btn.following:hover {
+          background: rgba(239, 68, 68, 0.04);
+          border-color: #ef4444;
+          color: #ef4444;
+        }
 
         .action-icon-btn {
           width: 44px;

@@ -32,9 +32,10 @@ class UserController extends CrudController
                    COALESCE((SELECT COUNT(*) FROM followers f WHERE f.' . $followedColumn . ' = users.id), 0) AS followers_count,
                    COALESCE((SELECT COUNT(*) FROM followers f WHERE f.follower_id = users.id), 0) AS following_count,' .
                    ($authUserId > 0
-                       ? ' EXISTS(SELECT 1 FROM followers vf WHERE vf.follower_id = :viewer_id AND vf.' . $followedColumn . ' = users.id) AS is_following'
-                       : ' 0 AS is_following');
-        if ($authUserId > 0) $params['viewer_id'] = $authUserId;
+                       ? ' EXISTS(SELECT 1 FROM followers vf WHERE vf.follower_id = :viewer_id1 AND vf.' . $followedColumn . ' = users.id) AS is_following,
+                         EXISTS(SELECT 1 FROM followers fb WHERE fb.follower_id = users.id AND fb.' . $followedColumn . ' = :viewer_id2) AS is_followed_by'
+                       : ' 0 AS is_following, 0 AS is_followed_by');
+        if ($authUserId > 0) $params['viewer_id1'] = $params['viewer_id2'] = $authUserId;
 
         $sql = '
             SELECT users.id, users.name, users.username, users.profile_image_url,
@@ -597,6 +598,7 @@ class UserController extends CrudController
                 'followed_user_id' => $followedId,
                 'followed' => true,
                 'is_following' => true,
+                'is_followed_by' => $this->isFollowing($followedId, $authUserId),
                 'followers_count' => $this->countFollowers($followedId),
                 'following_count' => $this->countFollowing($followedId),
             ];
@@ -637,6 +639,7 @@ class UserController extends CrudController
             'followed_user_id' => $followedId,
             'followed' => true,
             'is_following' => true,
+            'is_followed_by' => $this->isFollowing($followedId, $authUserId),
             'followers_count' => $this->countFollowers($followedId),
             'following_count' => $this->countFollowing($followedId),
         ];
@@ -663,6 +666,7 @@ class UserController extends CrudController
                 'followed_user_id' => $followedId,
                 'unfollowed' => true,
                 'is_following' => false,
+                'is_followed_by' => $this->isFollowing($followedId, $authUserId),
                 'followers_count' => $this->countFollowers($followedId),
                 'following_count' => $this->countFollowing($followedId),
             ];
@@ -709,6 +713,7 @@ class UserController extends CrudController
             'followed_user_id' => $followedId,
             'unfollowed' => true,
             'is_following' => false,
+            'is_followed_by' => $this->isFollowing($followedId, $authUserId),
             'followers_count' => $this->countFollowers($followedId),
             'following_count' => $this->countFollowing($followedId),
         ];
@@ -1382,6 +1387,7 @@ class UserController extends CrudController
         $user['followers_count'] = $this->countFollowers($userId);
         $user['following_count'] = $this->countFollowing($userId);
         $user['is_following'] = $authUserId > 0 && $authUserId !== $userId ? $this->isFollowing($authUserId, $userId) : false;
+        $user['is_followed_by'] = $authUserId > 0 && $authUserId !== $userId ? $this->isFollowing($userId, $authUserId) : false;
         $user = $this->appendAvatarAliases($user);
 
         return $user;

@@ -262,6 +262,7 @@ export default function PostCard({ post, user, compact = false, clickable = fals
   const [shareToast, setShareToast] = useState("");
   const [messageModal, setMessageModal] = useState({ open: false, type: "info", title: "", message: "" });
   const [followState, setFollowState] = useState(() => (typeof user?.is_following === "undefined" ? null : Boolean(user.is_following)));
+  const [followBack, setFollowBack] = useState(() => (typeof user?.is_followed_by === "undefined" ? false : Boolean(user.is_followed_by)));
   const [editOpen, setEditOpen] = useState(false);
   const [editContent, setEditContent] = useState("");
   const [editCategory, setEditCategory] = useState("");
@@ -326,7 +327,10 @@ export default function PostCard({ post, user, compact = false, clickable = fals
     if (typeof user?.is_following !== "undefined") {
       setFollowState(Boolean(user.is_following));
     }
-  }, [user?.is_following, user?.id]);
+    if (typeof user?.is_followed_by !== "undefined") {
+      setFollowBack(Boolean(user.is_followed_by));
+    }
+  }, [user?.is_following, user?.is_followed_by, user?.id]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -1013,6 +1017,9 @@ export default function PostCard({ post, user, compact = false, clickable = fals
           ? Boolean(payload.is_following)
           : nextFollowState;
       setFollowState(persistedState);
+      if (typeof payload.is_followed_by !== "undefined") {
+        setFollowBack(Boolean(payload.is_followed_by));
+      }
     } catch (error) {
       setFollowState(!nextFollowState);
       setMessageModal({
@@ -1376,7 +1383,7 @@ export default function PostCard({ post, user, compact = false, clickable = fals
                   }}
                   disabled={followLoading}
                 >
-                  {followLoading ? "..." : followState ? "Following" : "Follow"}
+                  {followLoading ? "..." : followState ? "Following" : followBack ? "Follow Back" : "Follow"}
                 </button>
               )}
             </div>
