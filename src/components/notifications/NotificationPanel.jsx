@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useLayoutEffect } from "react";
 import { FiBell, FiCheck, FiCheckCircle, FiX } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -33,7 +33,33 @@ export default function NotificationPanel({ onClose }) {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const panelRef = useRef(null);
+  const [mobileTop, setMobileTop] = useState(56);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (panelRef.current && !panelRef.current.contains(e.target)) {
+        onClose?.();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside, { passive: true });
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [onClose]);
+
+  useLayoutEffect(() => {
+    const nav = document.querySelector(".navbar");
+    if (nav) {
+      const updateHeight = () => setMobileTop(nav.offsetHeight);
+      updateHeight();
+      const observer = new ResizeObserver(updateHeight);
+      observer.observe(nav);
+      return () => observer.disconnect();
+    }
+  }, []);
 
   const fetchNotifications = useCallback(async () => {
     try {
@@ -94,8 +120,7 @@ export default function NotificationPanel({ onClose }) {
 
   return (
     <>
-      <div className="notif-overlay" onClick={onClose} />
-      <div className="notif-panel" ref={panelRef}>
+      <div className="notif-panel" ref={panelRef} style={{ "--panel-top": `${mobileTop}px` }}>
         <div className="notif-header">
           <h3 className="notif-title">
             <FiBell /> Notifications
@@ -156,12 +181,6 @@ export default function NotificationPanel({ onClose }) {
       </div>
 
       <style>{`
-        .notif-overlay {
-          position: fixed;
-          inset: 0;
-          z-index: 999;
-          background: transparent;
-        }
         .notif-panel {
           position: absolute;
           top: calc(100% + 8px);
@@ -291,7 +310,7 @@ export default function NotificationPanel({ onClose }) {
         @media (max-width: 480px) {
           .notif-panel {
             position: fixed;
-            top: 56px;
+            top: var(--panel-top, 56px);
             left: 0;
             right: 0;
             bottom: 0;
@@ -299,6 +318,7 @@ export default function NotificationPanel({ onClose }) {
             max-height: none;
             border-radius: 0;
             border: none;
+            z-index: 1000;
           }
         }
       `}</style>
