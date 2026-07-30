@@ -3,22 +3,27 @@ import {
   FiMenu,
   FiPlus,
   FiUser,
-  FiSearch
+  FiSearch,
+  FiBell
 } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
+import { useState, useRef } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useSiteSettings } from "../../context/SiteSettingsContext";
 import ThemeToggle from "../common/ThemeToggle";
 import InstallAppButton from "../common/InstallAppButton";
+import NotificationPanel from "../notifications/NotificationPanel";
 import { getNavbarUsername, getProfilePath } from "../../utils/profile";
 import { useNavigation } from "../../context/NavigationContext";
 
 export default function Navbar({ onOpenLeft, onOpenRight }) {
-  const { user } = useAuth();
+  const { user, unreadCount } = useAuth();
   const { siteName, siteTagline, logoUrl } = useSiteSettings();
   const { isEnabled, itemsFor } = useNavigation();
   const dynamicHeaderLinks = itemsFor("header").filter((item) => !item.navKey.startsWith("header_") && (!item.authRequired || user.loggedIn));
   const navigate = useNavigate();
+  const [showNotifs, setShowNotifs] = useState(false);
+  const notifBtnRef = useRef(null);
   const profileLabelFull = user.name || user.username || user.email || "Profile";
   const profileLabel = getNavbarUsername(profileLabelFull);
   const profileTarget = getProfilePath(user);
@@ -66,6 +71,22 @@ export default function Navbar({ onOpenLeft, onOpenRight }) {
 
           {user.loggedIn ? (
             <>
+              <div className="notif-btn-wrapper" ref={notifBtnRef}>
+                <button
+                  className="action-btn notif-btn"
+                  type="button"
+                  onClick={() => setShowNotifs((v) => !v)}
+                  title="Notifications"
+                >
+                  <FiBell />
+                  {unreadCount > 0 && (
+                    <span className="notif-badge">{unreadCount > 99 ? "99+" : unreadCount}</span>
+                  )}
+                </button>
+                {showNotifs && (
+                  <NotificationPanel onClose={() => setShowNotifs(false)} />
+                )}
+              </div>
               {isEnabled("header_profile") && (
                 <button
                   className="action-btn profile-btn"
@@ -285,6 +306,34 @@ export default function Navbar({ onOpenLeft, onOpenRight }) {
         .profile-btn {
           padding: 0 14px;
           height: 44px;
+        }
+
+        .notif-btn-wrapper {
+          position: relative;
+          display: flex;
+        }
+
+        .notif-btn {
+          position: relative;
+          padding: 0 10px;
+          height: 44px;
+        }
+
+        .notif-badge {
+          position: absolute;
+          top: 4px;
+          right: 4px;
+          min-width: 18px;
+          height: 18px;
+          padding: 0 5px;
+          font-size: 10px;
+          font-weight: 700;
+          line-height: 18px;
+          text-align: center;
+          color: #fff;
+          background: #ef4444;
+          border-radius: 9px;
+          border: 2px solid var(--bg-solid);
         }
 
         .profile-label {
@@ -521,6 +570,15 @@ export default function Navbar({ onOpenLeft, onOpenRight }) {
           .navbar-actions .theme-toggle svg {
             width: 16px;
             height: 16px;
+          }
+
+          /* Hide profile button on mobile, keep notification bell */
+          .profile-btn {
+            display: none;
+          }
+
+          .notif-btn-wrapper {
+            display: flex;
           }
         }
 

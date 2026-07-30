@@ -55,6 +55,7 @@ function safeParseUser(value) {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(initialUser);
   const [ready, setReady] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   // Prevent an older bootstrap /me request from undoing a login that finished
   // while that request was still in flight.
   const authOperationRef = useRef(0);
@@ -90,12 +91,33 @@ export function AuthProvider({ children }) {
     return null;
   }
 
+  async function refreshNotifications() {
+    try {
+      const res = await api.get("/api/notifications/unread-count");
+      const count = res.data?.count ?? res.data?.data?.count ?? 0;
+      setUnreadCount(Number(count));
+      return Number(count);
+    } catch {
+      return 0;
+    }
+  }
+
   useEffect(() => {
     const storedUser = safeParseUser(localStorage.getItem("user"));
     refreshUser().finally(() => {
       setReady(true);
     });
   }, []);
+
+  useEffect(() => {
+    if (user.loggedIn) {
+      refreshNotifications();
+      const interval = setInterval(refreshNotifications, 30000);
+      return () => clearInterval(interval);
+    } else {
+      setUnreadCount(0);
+    }
+  }, [user.loggedIn]);
 
   const value = useMemo(
     () => ({
@@ -128,8 +150,10 @@ export function AuthProvider({ children }) {
       },
       refreshUser,
       setUser,
+      unreadCount,
+      refreshNotifications,
     }),
-    [user, ready, refreshUser]
+    [user, ready, refreshUser, unreadCount]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -8,6 +8,7 @@ use ConnectNKT\Core\CrudController;
 use ConnectNKT\Models\Notification;
 use ConnectNKT\Models\PostComment;
 use ConnectNKT\Models\Post;
+use ConnectNKT\Models\Notification;
 use ConnectNKT\Models\User;
 
 final class CommentController extends CrudController
@@ -125,6 +126,18 @@ final class CommentController extends CrudController
         $row = $comment->fetch(\PDO::FETCH_ASSOC) ?: ['id' => $id, 'post_id' => $postId, 'user_id' => $authUserId, 'body' => trim((string) $data['body'])];
         if ($parentCommentId > 0) {
             $this->notifyReplyOwner($id, $authUserId);
+        } elseif ((int) ($post['user_id'] ?? 0) !== $authUserId) {
+            $actorName = $this->getActorName($authUserId);
+            Notification::createNotification(
+                $this->db(),
+                (int) ($post['user_id'] ?? 0),
+                $authUserId,
+                'comment',
+                'Comment',
+                $actorName . ' commented on your post.',
+                'post',
+                $postId
+            );
         }
 
         return [
@@ -388,16 +401,25 @@ final class CommentController extends CrudController
             return;
         }
 
-        (new Notification($this->db()))->create([
-            'recipient_user_id' => $recipientId,
-            'actor_user_id' => $actorUserId,
-            'notification_type' => 'comment_reply',
-            'title' => 'New reply',
-            'body' => trim((string) ($row['actor_name'] ?? $row['actor_username'] ?? 'Someone')) . ' replied to your comment.',
-            'entity_type' => 'comment',
-            'entity_id' => $commentId,
-            'is_read' => 0,
-        ]);
+        $actorName = trim((string) ($row['actor_name'] ?? $row['actor_username'] ?? 'Someone'));
+        Notification::createNotification(
+            $this->db(),
+            $recipientId,
+            $actorUserId,
+            'comment_reply',
+            'New reply',
+            $actorName . ' replied to your comment.',
+            'comment',
+            $commentId
+        );
+    }
+
+    private function getActorName(int $userId): string
+    {
+        $stmt = $this->db()->prepare('SELECT name, username FROM users WHERE id = :id LIMIT 1');
+        $stmt->execute(['id' => $userId]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $row ? (trim((string) ($row['name'] ?? '')) ?: ($row['username'] ?? 'Someone')) : 'Someone';
     }
 
     private function followedColumn(): string

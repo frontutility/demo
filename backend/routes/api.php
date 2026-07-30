@@ -32,6 +32,7 @@ use ConnectNKT\Controllers\UserController;
 use ConnectNKT\Controllers\UserSettingsController;
 use ConnectNKT\Controllers\VillageController;
 use ConnectNKT\Controllers\NavigationController;
+use ConnectNKT\Controllers\NotificationController;
 use ConnectNKT\Core\Database;
 use ConnectNKT\Helpers\Response;
 use ConnectNKT\Models\SiteSetting;
@@ -147,6 +148,12 @@ $router->get('/api/posts/village/:id', [PostController::class, 'village']);
 $router->get('/api/posts/user/:id', [PostController::class, 'user']);
 $router->post('/api/posts/:id/react', [PostController::class, 'react'], [$auth, $userStatus]);
 $router->delete('/api/posts/:id/react', [PostController::class, 'unreact'], [$auth, $userStatus]);
+
+// Notification Routes
+$router->get('/api/notifications', [NotificationController::class, 'index'], [$auth, $userStatus]);
+$router->get('/api/notifications/unread-count', [NotificationController::class, 'unreadCount'], [$auth, $userStatus]);
+$router->post('/api/notifications/:id/read', [NotificationController::class, 'markRead'], [$auth, $userStatus]);
+$router->post('/api/notifications/read-all', [NotificationController::class, 'markAllRead'], [$auth, $userStatus]);
 $router->post('/api/polls/:id/vote', [PostController::class, 'vote'], [$auth, $userStatus]);
 $router->post('/api/posts/:id/vote', [PostController::class, 'vote'], [$auth, $userStatus]);
 $router->post('/api/posts/:id/share', [PostController::class, 'share'], [$auth, $userStatus, $rateLimitMutation]);

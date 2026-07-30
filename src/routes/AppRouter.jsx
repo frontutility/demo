@@ -33,6 +33,7 @@ const BusinessDetailPage = lazy(() => import("../pages/business/BusinessDetailPa
 const SuggestionsPage = lazy(() => import("../pages/SuggestionsPage"));
 const AllSupportersPage = lazy(() => import("../pages/AllSupportersPage"));
 const DonationPage = lazy(() => import("../pages/donation/DonationPage"));
+const NotificationsPage = lazy(() => import("../pages/notifications/NotificationsPage"));
 
 const AdminDashboardPage = lazy(() => import("../admin/dashboard/AdminDashboardPage"));
 const AdminUsersPage = lazy(() => import("../admin/users/AdminUsersPage"));
@@ -269,6 +270,16 @@ export default function AppRouter() {
             <Wrap>
               <SearchPage />
             </Wrap>
+          }
+        />
+        <Route
+          path="notifications"
+          element={
+            <ProtectedRoute>
+              <Wrap>
+                <NotificationsPage />
+              </Wrap>
+            </ProtectedRoute>
           }
         />
         <Route

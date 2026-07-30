@@ -7,6 +7,7 @@ namespace ConnectNKT\Controllers;
 use ConnectNKT\Core\CrudController;
 use ConnectNKT\Models\User;
 use ConnectNKT\Models\UserSetting;
+use ConnectNKT\Models\Notification;
 use ConnectNKT\Helpers\Username;
 
 class UserController extends CrudController
@@ -620,6 +621,18 @@ class UserController extends CrudController
             return [];
         }
 
+        $actorName = $this->getActorShortName($authUserId);
+        Notification::createNotification(
+            $this->db(),
+            $followedId,
+            $authUserId,
+            'follow',
+            'Follow',
+            $actorName . ' started following you.',
+            'user',
+            $authUserId
+        );
+
         return [
             'followed_user_id' => $followedId,
             'followed' => true,
@@ -1002,6 +1015,14 @@ class UserController extends CrudController
         }
 
         return false;
+    }
+
+    private function getActorShortName(int $userId): string
+    {
+        $stmt = $this->db()->prepare('SELECT name, username FROM users WHERE id = :id LIMIT 1');
+        $stmt->execute(['id' => $userId]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $row ? (trim((string) ($row['name'] ?? '')) ?: ($row['username'] ?? 'Someone')) : 'Someone';
     }
 
     private function sanitizeUser(array $user): array

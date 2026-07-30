@@ -8,6 +8,7 @@ use ConnectNKT\Core\CrudController;
 use ConnectNKT\Helpers\Validator;
 use ConnectNKT\Helpers\Upload;
 use ConnectNKT\Helpers\Str;
+use ConnectNKT\Models\Notification;
 use ConnectNKT\Helpers\PollPercentage;
 use ConnectNKT\Models\Post;
 use ConnectNKT\Models\PostImage;
@@ -686,6 +687,21 @@ class PostController extends CrudController
             $this->fail('Could not save reaction.', 500);
         }
 
+        if ($existing !== $reactionType && (int) ($post['user_id'] ?? 0) !== $authUserId) {
+            $actorName = $this->getUserShortName($authUserId);
+            $label = $reactionType === 'agree' ? 'agreed with' : 'disagreed with';
+            Notification::createNotification(
+                $this->db(),
+                (int) ($post['user_id'] ?? 0),
+                $authUserId,
+                $reactionType,
+                ucfirst($reactionType),
+                $actorName . ' ' . $label . ' your post.',
+                'post',
+                $postId
+            );
+        }
+
         return $this->normalizePost($this->model()->find($postId) ?? ['id' => $postId]);
     }
 
@@ -745,6 +761,21 @@ class PostController extends CrudController
 
         $stmt = $this->db()->prepare('UPDATE posts SET shares_count = shares_count + 1, updated_at = CURRENT_TIMESTAMP WHERE id = :id LIMIT 1');
         $stmt->execute(['id' => $postId]);
+
+        $authUserId = $this->currentUserId();
+        if ($authUserId > 0 && (int) ($post['user_id'] ?? 0) !== $authUserId) {
+            $actorName = $this->getUserShortName($authUserId);
+            Notification::createNotification(
+                $this->db(),
+                (int) ($post['user_id'] ?? 0),
+                $authUserId,
+                'share',
+                'Share',
+                $actorName . ' shared your post.',
+                'post',
+                $postId
+            );
+        }
 
         return $this->normalizePost($this->model()->find($postId) ?? ['id' => $postId]);
     }
@@ -1157,6 +1188,14 @@ class PostController extends CrudController
         $stmt = $this->db()->prepare('SELECT role FROM admins WHERE id = :id LIMIT 1');
         $stmt->execute(['id' => $userId]);
         return (bool) $stmt->fetchColumn();
+    }
+
+    private function getUserShortName(int $userId): string
+    {
+        $stmt = $this->db()->prepare('SELECT name, username FROM users WHERE id = :id LIMIT 1');
+        $stmt->execute(['id' => $userId]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $row ? (trim((string) ($row['name'] ?? '')) ?: ($row['username'] ?? 'Someone')) : 'Someone';
     }
 
     public function destroy(string $id): array

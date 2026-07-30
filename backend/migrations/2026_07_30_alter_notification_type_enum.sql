@@ -1,0 +1,1 @@
+ALTER TABLE notifications MODIFY COLUMN `notification_type` ENUM('agree','disagree','comment','comment_reply','comment_like','follow','share','mention','blue_tick','system','post_reaction','report') NOT NULL DEFAULT 'system';
