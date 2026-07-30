@@ -15,6 +15,7 @@ export default defineConfig({
   ],
   server: {
     host: "localhost",
+    allowedHosts: ['.monkeycode-ai.live'],
     headers: {
       "Cross-Origin-Opener-Policy": "same-origin-allow-popups",
       "Content-Security-Policy": csp(true),

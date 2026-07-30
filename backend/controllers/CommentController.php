@@ -8,8 +8,8 @@ use ConnectNKT\Core\CrudController;
 use ConnectNKT\Models\Notification;
 use ConnectNKT\Models\PostComment;
 use ConnectNKT\Models\Post;
-use ConnectNKT\Models\Notification;
 use ConnectNKT\Models\User;
+use ConnectNKT\Helpers\HtmlSanitizer;
 
 final class CommentController extends CrudController
 {
@@ -99,9 +99,10 @@ final class CommentController extends CrudController
         if ($body === '') {
             $this->fail('Comment body is required.', 422);
         }
-        if (mb_strlen($body, 'UTF-8') > 2000) {
-            $this->fail('Comment body must be 2000 characters or less.', 422);
+        if (mb_strlen($body, 'UTF-8') > 5000) {
+            $this->fail('Comment body must be 5000 characters or less.', 422);
         }
+        $body = HtmlSanitizer::clean($body);
         $data['body'] = $body;
 
         $parentCommentId = (int) ($data['parent_comment_id'] ?? $data['parentCommentId'] ?? 0);
@@ -170,7 +171,8 @@ final class CommentController extends CrudController
             $this->fail('Comment body is required.', 422);
         }
 
-        $this->model()->update((int) $id, ['body' => trim((string) $data['body'])]);
+        $body = HtmlSanitizer::clean(trim((string) $data['body']));
+        $this->model()->update((int) $id, ['body' => $body]);
         $stmt = $this->db()->prepare($this->commentSelectSql('pc.id = :id LIMIT 1'));
         $stmt->execute(['id' => (int) $id, 'viewer_id' => $authUserId]);
         $updated = $stmt->fetch(\PDO::FETCH_ASSOC);

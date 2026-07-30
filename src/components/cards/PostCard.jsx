@@ -259,6 +259,8 @@ export default function PostCard({ post, user, compact = false, clickable = fals
   const [replySaving, setReplySaving] = useState({});
   const [editCommentId, setEditCommentId] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
+  const [deleteCommentTarget, setDeleteCommentTarget] = useState(null);
+  const [deletingCommentIds, setDeletingCommentIds] = useState(new Set());
   const [shareToast, setShareToast] = useState("");
   const [messageModal, setMessageModal] = useState({ open: false, type: "info", title: "", message: "" });
   const [followState, setFollowState] = useState(() => (typeof user?.is_following === "undefined" ? null : Boolean(user.is_following)));
@@ -631,7 +633,14 @@ export default function PostCard({ post, user, compact = false, clickable = fals
       return;
     }
     const draft = String(replyDrafts[comment.id] || "").trim();
-    if (!draft) return;
+    if (!draft) {
+      setCommentError("Please write a reply before sending.");
+      return;
+    }
+    if (draft.length > 5000) {
+      setCommentError("Reply is too long (max 5000 characters).");
+      return;
+    }
     const body = countWords(draft) > 50 ? truncateWords(draft, 50) : draft;
     const rootId = comment.parentCommentId || comment.id;
 
@@ -685,10 +694,14 @@ export default function PostCard({ post, user, compact = false, clickable = fals
   function updateMainCommentText(nextText) {
     const nextValue = String(nextText || "");
     const nextCount = countWords(nextValue);
+    if (nextValue.length > 5000) {
+      setCommentError("Comments are limited to 5000 characters.");
+      return;
+    }
     setCommentText(nextValue);
     if (nextCount > 50) {
       setCommentError("Comments are limited to 50 words.");
-    } else if (commentError === "Comments are limited to 50 words.") {
+    } else if (commentError === "Comments are limited to 50 words." || commentError === "Comments are limited to 5000 characters.") {
       setCommentError("");
     }
     updateSuggestions(nextValue);
@@ -701,10 +714,17 @@ export default function PostCard({ post, user, compact = false, clickable = fals
     }
     if (!post?.id) return;
 
+    const cleanBody = String(body || "").trim();
+    if (!cleanBody) return;
+    if (cleanBody.length > 5000) {
+      setCommentError("Quick comment is too long (max 5000 characters).");
+      return;
+    }
+
     setCommentSaving(true);
     setCommentError("");
     try {
-      const response = await api.post(`/api/posts/${post.id}/comments`, { body });
+      const response = await api.post(`/api/posts/${post.id}/comments`, { body: cleanBody });
       const payload = response.data?.data ?? response.data ?? {};
       const created = payload.comment ? normalizeComment(payload.comment) : null;
       setCommentText("");
@@ -734,6 +754,10 @@ export default function PostCard({ post, user, compact = false, clickable = fals
     const body = String(commentText || "").trim();
     if (!body) {
       setCommentError("Please write a comment before sending.");
+      return;
+    }
+    if (body.length > 5000) {
+      setCommentError("Comment is too long (max 5000 characters).");
       return;
     }
     let finalBody = body;
@@ -767,8 +791,19 @@ export default function PostCard({ post, user, compact = false, clickable = fals
     }
   }
 
+  function openDeleteCommentConfirm(comment) {
+    setDeleteCommentTarget(comment);
+  }
+
   async function handleDeleteComment(commentId) {
+    setDeleteCommentTarget(null);
+    setDeletingCommentIds((prev) => new Set(prev).add(commentId));
+
+    const targetComment = findCommentInTree(commentId);
+    const isReply = targetComment && targetComment.parentCommentId;
+    const rootId = targetComment ? (targetComment.parentCommentId || commentId) : null;
     const previousComments = comments;
+
     updateCommentInTree(commentId, (comment) => ({ ...comment, isDeleted: true, body: "This comment has been deleted.", content: "This comment has been deleted." }));
     setCounts((current) => ({ ...current, comments: Math.max(0, current.comments - 1) }));
 
@@ -776,10 +811,26 @@ export default function PostCard({ post, user, compact = false, clickable = fals
       const response = await api.delete(`/api/comments/${commentId}`);
       const payload = response.data?.data ?? response.data ?? {};
       setCounts((current) => ({ ...current, comments: Number(payload.comments_count ?? current.comments) }));
+      if (isReply && rootId) {
+        updateCommentInTree(rootId, (comment) => ({
+          ...comment,
+          replyCount: Math.max(0, (comment.replyCount || 1) - 1),
+        }));
+      }
     } catch (error) {
       setComments(previousComments);
-      setCounts((current) => ({ ...current, comments: previousComments.length }));
+      setCounts((current) => ({ ...current, comments: previousComments.reduce((total, c) => {
+        let count = 1;
+        if (c.replies) count += c.replies.length;
+        return total + count;
+      }, 0) }));
       setCommentError(error?.response?.data?.message || error.message || "Could not delete comment");
+    } finally {
+      setDeletingCommentIds((prev) => {
+        const next = new Set(prev);
+        next.delete(commentId);
+        return next;
+      });
     }
   }
 
@@ -792,8 +843,15 @@ export default function PostCard({ post, user, compact = false, clickable = fals
   async function saveCommentEdit(event, commentId) {
     event.preventDefault();
     const trimmedBody = String(editCommentText || "").trim();
+    if (!trimmedBody) {
+      setCommentError("Comment body cannot be empty.");
+      return;
+    }
+    if (trimmedBody.length > 5000) {
+      setCommentError("Comment is too long (max 5000 characters).");
+      return;
+    }
     const body = countWords(trimmedBody) > 50 ? truncateWords(trimmedBody, 50) : trimmedBody;
-    if (!body) return;
     setCommentError("");
     try {
       const response = await api.put(`/api/comments/${commentId}`, { body });
@@ -868,7 +926,7 @@ export default function PostCard({ post, user, compact = false, clickable = fals
                   </button>
                 )}
                 {canDelete && (
-                  <button type="button" className="comment-icon-btn danger" onClick={() => handleDeleteComment(comment.id)} aria-label="Delete comment">
+                  <button type="button" className="comment-icon-btn danger" onClick={() => openDeleteCommentConfirm(comment)} disabled={deletingCommentIds.has(comment.id)} aria-label="Delete comment">
                     <FiTrash2 size={13} />
                   </button>
                 )}
@@ -1875,6 +1933,20 @@ export default function PostCard({ post, user, compact = false, clickable = fals
         }}
         onClose={() => setDeleteConfirmOpen(false)}
         loading={actionLoading}
+      />
+
+      <ConfirmationModal
+        open={Boolean(deleteCommentTarget)}
+        title="Delete comment"
+        message="Are you sure you want to delete this comment?"
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        onConfirm={() => {
+          const target = deleteCommentTarget;
+          if (target) handleDeleteComment(target.id);
+        }}
+        onClose={() => setDeleteCommentTarget(null)}
+        loading={deletingCommentIds.size > 0}
       />
 
       {editOpen && (
