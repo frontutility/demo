@@ -5,10 +5,16 @@ declare(strict_types=1);
 namespace ConnectNKT\Controllers;
 
 use ConnectNKT\Core\BaseController;
+use ConnectNKT\Core\Database;
 use ConnectNKT\Models\Notification;
 
 final class NotificationController extends BaseController
 {
+    private function db(): \PDO
+    {
+        return Database::pdo();
+    }
+
     public function index(): void
     {
         $userId = $this->currentUserId();
