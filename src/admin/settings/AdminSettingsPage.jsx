@@ -23,6 +23,7 @@ const defaults = {
   enableSuggestions: true,
   suggestionsInterval: 15,
   suggestionsCount: 6,
+  maintenanceMode: false,
 };
 
 export default function AdminSettingsPage() {
@@ -52,6 +53,7 @@ export default function AdminSettingsPage() {
         enableSuggestions: settingsData.enableSuggestions ?? settingsData.enable_suggestions ?? defaults.enableSuggestions,
         suggestionsInterval: settingsData.suggestionsInterval ?? settingsData.suggestions_interval ?? defaults.suggestionsInterval,
         suggestionsCount: settingsData.suggestionsCount ?? settingsData.suggestions_count ?? defaults.suggestionsCount,
+        maintenanceMode: settingsData.maintenanceMode ?? settingsData.maintenance_mode ?? false,
       });
     }
   }, [settingsData]);
@@ -206,6 +208,30 @@ export default function AdminSettingsPage() {
                 }
                 placeholder="Number of suggestions to show (6)"
               />
+            </div>
+          </SectionCard>
+
+          <SectionCard title="Maintenance Mode">
+            <div className="admin-form-grid">
+              <label className="admin-full stack">
+                <span className="muted">Maintenance Mode</span>
+                <select
+                  className="admin-select"
+                  value={form.maintenanceMode ? "true" : "false"}
+                  onChange={(event) =>
+                    setForm((value) => ({ ...value, maintenanceMode: event.target.value === "true" }))
+                  }
+                  style={form.maintenanceMode ? { borderColor: "#ef4444", background: "#fef2f2" } : {}}
+                >
+                  <option value="false">OFF — Website is live</option>
+                  <option value="true">ON — Website is under maintenance</option>
+                </select>
+              </label>
+              {form.maintenanceMode ? (
+                <div style={{ gridColumn: "1 / -1", padding: "8px 12px", background: "#fef2f2", borderRadius: "8px", fontSize: "13px", color: "#991b1b" }}>
+                  Warning: Enabling maintenance mode will hide the entire website from all users. Only admins will be able to access the admin panel.
+                </div>
+              ) : null}
             </div>
           </SectionCard>
 

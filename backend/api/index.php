@@ -5,6 +5,7 @@ declare(strict_types=1);
 use ConnectNKT\Core\Router;
 use ConnectNKT\Helpers\Env;
 use ConnectNKT\Helpers\Response;
+use ConnectNKT\Models\SiteSetting;
 
 require_once __DIR__ . '/../config/bootstrap.php';
 
@@ -61,6 +62,25 @@ if ($uri === '') {
 }
 
 try {
+
+    // Maintenance mode check — block non-admin requests when site is under maintenance
+    $isAdminRoute = str_starts_with($uri, '/api/admin');
+    $isSettingsRoute = $uri === '/api/settings' || $uri === '/';
+    if (!$isAdminRoute && !$isSettingsRoute) {
+        try {
+            $settingsRows = (new SiteSetting())->all([], 'id ASC', 1);
+            $maintenanceMode = !empty($settingsRows[0]['maintenance_mode']);
+        } catch (\Throwable) {
+            $maintenanceMode = false;
+        }
+        if ($maintenanceMode) {
+            Response::json([
+                'success' => false,
+                'maintenance' => true,
+                'message' => 'Website is under maintenance.',
+            ], 503);
+        }
+    }
 
     $router->dispatch($method, $uri);
 

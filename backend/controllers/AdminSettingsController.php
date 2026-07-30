@@ -29,6 +29,7 @@ final class AdminSettingsController extends BaseController
             'defaultTheme' => $settings['default_theme'] ?? 'light',
             'logoUrl' => $settings['logo_url'] ?? $settings['logo'] ?? null,
             'faviconUrl' => $settings['favicon_url'] ?? $settings['favicon'] ?? null,
+            'maintenanceMode' => (bool) ($settings['maintenance_mode'] ?? 0),
         ]);
     }
 
@@ -105,6 +106,7 @@ final class AdminSettingsController extends BaseController
             'default_theme' => $input['defaultTheme'] ?? $input['default_theme'] ?? null,
             'logo_url' => $input['logoUrl'] ?? $input['logo_url'] ?? $input['logo'] ?? null,
             'favicon_url' => $input['faviconUrl'] ?? $input['favicon_url'] ?? $input['favicon'] ?? null,
+            'maintenance_mode' => isset($input['maintenanceMode']) ? ($input['maintenanceMode'] ? 1 : 0) : null,
         ];
 
         $adminId = $this->currentUserId();
@@ -125,6 +127,7 @@ final class AdminSettingsController extends BaseController
             'defaultTheme' => $updated['default_theme'],
             'logoUrl' => $updated['logo_url'] ?? $updated['logo'] ?? null,
             'faviconUrl' => $updated['favicon_url'] ?? $updated['favicon'] ?? null,
+            'maintenanceMode' => (bool) ($updated['maintenance_mode'] ?? 0),
         ], 'Settings saved');
     }
 }

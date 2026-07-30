@@ -17,6 +17,7 @@ const defaultSettings = {
   enableSuggestions: true,
   suggestionsInterval: 10,
   suggestionsCount: 6,
+  maintenanceMode: false,
 };
 
 const SiteSettingsContext = createContext(null);
@@ -39,6 +40,7 @@ function normalizeSettings(payload = {}) {
     enableSuggestions: payload.enableSuggestions ?? payload.enable_suggestions ?? defaultSettings.enableSuggestions,
     suggestionsInterval: payload.suggestionsInterval ?? payload.suggestions_interval ?? defaultSettings.suggestionsInterval,
     suggestionsCount: payload.suggestionsCount ?? payload.suggestions_count ?? defaultSettings.suggestionsCount,
+    maintenanceMode: payload.maintenanceMode ?? payload.maintenance_mode ?? false,
   };
 }
 
@@ -100,10 +102,11 @@ export function SiteSettingsProvider({ children }) {
     settings,
     loading,
     siteName: settings.websiteName || defaultSettings.websiteName,
-    siteTagline: settings.websiteTagline || defaultSettings.websiteTagline,
+    siteTagline: settings.websiteTagline || defaultSettings.siteTagline,
     siteDescription: settings.websiteDescription || defaultSettings.websiteDescription,
     logoUrl: settings.logoUrl ? resolveMediaUrl(settings.logoUrl) : "/logo.png",
     faviconUrl: settings.faviconUrl ? resolveMediaUrl(settings.faviconUrl) : "/favicon-96x96.png",
+    maintenanceMode: settings.maintenanceMode,
   }), [loading, settings]);
 
   return <SiteSettingsContext.Provider value={value}>{children}</SiteSettingsContext.Provider>;
