@@ -341,7 +341,7 @@ export default function RichTextEditor({
           border: 1px solid var(--line, #e2e8f0);
           border-radius: 8px;
           padding: 8px;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+          box-shadow: var(--shadow, 0 8px 24px rgba(0, 0, 0, 0.12));
           z-index: 100;
           min-width: 200px;
           max-width: 220px;
@@ -449,7 +449,7 @@ export default function RichTextEditor({
           height: auto;
           border-radius: 8px;
           margin: 8px 0;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+          box-shadow: var(--shadow, 0 2px 8px rgba(0, 0, 0, 0.06));
         }
 
         .rich-text-editor h2 {

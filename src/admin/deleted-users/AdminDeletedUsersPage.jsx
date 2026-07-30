@@ -150,9 +150,9 @@ export default function AdminDeletedUsersPage() {
           flex-wrap: wrap !important;
           gap: 12px !important;
           padding: 16px !important;
-          background: #f8fafc !important;
+          background: var(--bg) !important;
           border-radius: 12px !important;
-          border: 1px solid #e2e8f0 !important;
+          border: 1px solid var(--line) !important;
           margin-bottom: 20px !important;
           align-items: center !important;
         }
@@ -164,23 +164,23 @@ export default function AdminDeletedUsersPage() {
         .admin-users-page .search-input-wrapper input {
           width: 100% !important;
           padding: 10px 16px 10px 44px !important;
-          border: 2px solid #e2e8f0 !important;
+          border: 2px solid var(--line) !important;
           border-radius: 10px !important;
           font-size: 14px !important;
           outline: none !important;
-          background: white !important;
+          background: var(--bg-solid) !important;
           transition: all 0.2s !important;
         }
         .admin-users-page .search-input-wrapper input:focus {
-          border-color: #3b82f6 !important;
-          box-shadow: 0 0 0 3px rgba(59,130,246,0.1) !important;
+          border-color: var(--brand-2) !important;
+          box-shadow: 0 0 0 3px rgba(var(--brand-2-rgb, 59, 130, 246),0.1) !important;
         }
         .admin-users-page .search-icon {
           position: absolute !important;
           left: 14px !important;
           top: 50% !important;
           transform: translateY(-50%) !important;
-          color: #94a3b8 !important;
+          color: var(--text-secondary) !important;
           font-size: 18px !important;
         }
         .admin-users-page .date-filter-wrapper {
@@ -191,12 +191,12 @@ export default function AdminDeletedUsersPage() {
         }
         .admin-users-page .date-input {
           padding: 8px 12px !important;
-          border: 2px solid #e2e8f0 !important;
+          border: 2px solid var(--line) !important;
           border-radius: 10px !important;
           font-size: 13px !important;
           outline: none !important;
-          background: white !important;
-          color: #334155 !important;
+          background: var(--bg-solid) !important;
+          color: var(--text) !important;
         }
         .admin-users-page .export-buttons {
           display: flex !important;
@@ -209,21 +209,21 @@ export default function AdminDeletedUsersPage() {
           align-items: center !important;
           gap: 6px !important;
           padding: 10px 16px !important;
-          background: white !important;
-          border: 2px solid #e2e8f0 !important;
+          background: var(--bg-solid) !important;
+          border: 2px solid var(--line) !important;
           border-radius: 10px !important;
           font-size: 13px !important;
           font-weight: 600 !important;
-          color: #475569 !important;
+          color: var(--text) !important;
           cursor: pointer !important;
           transition: all 0.2s !important;
           white-space: nowrap !important;
         }
         .admin-users-page .export-btn:hover:not(:disabled) {
-          border-color: #3b82f6 !important;
-          color: #1e40af !important;
+          border-color: var(--brand-2) !important;
+          color: var(--brand-2) !important;
           transform: translateY(-1px) !important;
-          box-shadow: 0 2px 8px rgba(59,130,246,0.15) !important;
+          box-shadow: 0 2px 8px rgba(var(--brand-2-rgb, 59, 130, 246),0.15) !important;
         }
         .admin-users-page .export-btn:disabled {
           opacity: 0.5 !important;
@@ -239,25 +239,25 @@ export default function AdminDeletedUsersPage() {
           flex: 1 1 140px !important;
           min-width: 120px !important;
           padding: 8px 12px !important;
-          border: 2px solid #e2e8f0 !important;
+          border: 2px solid var(--line) !important;
           border-radius: 8px !important;
           font-size: 13px !important;
-          background: white !important;
-          color: #334155 !important;
+          background: var(--bg-solid) !important;
+          color: var(--text) !important;
           font-weight: 500 !important;
           cursor: pointer !important;
           outline: none !important;
           transition: all 0.2s !important;
         }
         .admin-users-page .filters-row select:focus {
-          border-color: #3b82f6 !important;
-          box-shadow: 0 0 0 3px rgba(59,130,246,0.1) !important;
+          border-color: var(--brand-2) !important;
+          box-shadow: 0 0 0 3px rgba(var(--brand-2-rgb, 59, 130, 246),0.1) !important;
         }
         .admin-users-page .table-wrap {
           overflow-x: auto !important;
           border-radius: 12px !important;
-          border: 1px solid #e2e8f0 !important;
-          background: white !important;
+          border: 1px solid var(--line) !important;
+          background: var(--bg-solid) !important;
           width: 100% !important;
         }
         .admin-users-page .table-wrap table {
@@ -267,17 +267,17 @@ export default function AdminDeletedUsersPage() {
           font-size: 14px !important;
         }
         .admin-users-page .table-wrap th {
-          background: #f8fafc !important;
+          background: var(--bg) !important;
           font-weight: 600 !important;
-          color: #475569 !important;
-          border-bottom: 2px solid #e2e8f0 !important;
+          color: var(--text) !important;
+          border-bottom: 2px solid var(--line) !important;
           padding: 12px 10px !important;
           text-align: left !important;
           white-space: nowrap;
         }
         .admin-users-page .table-wrap td {
           padding: 10px !important;
-          border-bottom: 1px solid #f1f5f9 !important;
+          border-bottom: 1px solid var(--line) !important;
           white-space: nowrap;
         }
         .admin-users-page .pagination {
@@ -293,11 +293,11 @@ export default function AdminDeletedUsersPage() {
         .admin-users-page .pagination .controls button {
           padding: 8px 16px !important;
           border-radius: 8px !important;
-          border: 1px solid #e2e8f0 !important;
-          background: white !important;
+          border: 1px solid var(--line) !important;
+          background: var(--bg-solid) !important;
           cursor: pointer !important;
           font-size: 14px !important;
-          color: #475569 !important;
+          color: var(--text) !important;
         }
         .admin-users-page .pagination .controls button:disabled {
           opacity: 0.4 !important;
@@ -305,46 +305,11 @@ export default function AdminDeletedUsersPage() {
         }
         .admin-users-page .pagination .controls .page-badge {
           padding: 6px 14px !important;
-          background: #f1f5f9 !important;
+          background: var(--bg) !important;
           border-radius: 8px !important;
           font-size: 14px !important;
-          color: #475569 !important;
+          color: var(--text) !important;
           font-weight: 600 !important;
-        }
-        @media (prefers-color-scheme: dark) {
-          .admin-users-page .search-bar-container {
-            background: #1e293b !important;
-            border-color: #334155 !important;
-          }
-          .admin-users-page .search-input-wrapper input,
-          .admin-users-page .filters-row select,
-          .admin-users-page .date-input {
-            background: #0f172a !important;
-            border-color: #334155 !important;
-            color: #e2e8f0 !important;
-          }
-          .admin-users-page .table-wrap {
-            background: #1e293b !important;
-            border-color: #334155 !important;
-          }
-          .admin-users-page .table-wrap th {
-            background: #0f172a !important;
-            color: #94a3b8 !important;
-            border-bottom-color: #334155 !important;
-          }
-          .admin-users-page .table-wrap td {
-            border-bottom-color: #334155 !important;
-            color: #e2e8f0 !important;
-          }
-          .admin-users-page .pagination .controls button {
-            background: #1e293b !important;
-            border-color: #334155 !important;
-            color: #e2e8f0 !important;
-          }
-          .admin-users-page .pagination .controls .page-badge {
-            background: #334155 !important;
-            color: #e2e8f0 !important;
-          }
         }
       `}</style>
 
@@ -363,7 +328,7 @@ export default function AdminDeletedUsersPage() {
           </div>
 
           <div className="date-filter-wrapper">
-            <FiCalendar size={16} style={{ color: "#94a3b8" }} />
+            <FiCalendar size={16} style={{ color: "var(--text-secondary)" }} />
             <input
               type="date"
               className="date-input"
@@ -371,7 +336,7 @@ export default function AdminDeletedUsersPage() {
               onChange={(e) => setStartDate(e.target.value)}
               placeholder="Start Date"
             />
-            <span style={{ color: "#94a3b8" }}>to</span>
+            <span style={{ color: "var(--text-secondary)" }}>to</span>
             <input
               type="date"
               className="date-input"
@@ -520,66 +485,66 @@ export default function AdminDeletedUsersPage() {
         ) : selectedUser ? (
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
-              <div style={{ padding: "8px 12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "8px 12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>Name:</strong> {selectedUser.name || "N/A"}
               </div>
-              <div style={{ padding: "8px 12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "8px 12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>Username:</strong> @{selectedUser.username || "N/A"}
               </div>
-              <div style={{ padding: "8px 12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "8px 12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>Email:</strong> {selectedUser.email || "N/A"}
               </div>
-              <div style={{ padding: "8px 12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "8px 12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>Phone:</strong> {selectedUser.phone || "N/A"}
               </div>
-              <div style={{ padding: "8px 12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "8px 12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>Village:</strong> {selectedUser.villageName || "N/A"}
               </div>
-              <div style={{ padding: "8px 12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "8px 12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>Gender:</strong> {selectedUser.gender || "N/A"}
               </div>
-              <div style={{ padding: "8px 12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "8px 12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>Date of Birth:</strong> {selectedUser.dateOfBirth || "N/A"}
               </div>
-              <div style={{ padding: "8px 12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "8px 12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>Account Type:</strong> {selectedUser.accountType}
               </div>
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
-              <div style={{ padding: "8px 12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "8px 12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>Followers Count:</strong> {formatCount(selectedUser.totalFollowers || 0)}
               </div>
-              <div style={{ padding: "8px 12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "8px 12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>Following Count:</strong> {formatCount(selectedUser.totalFollowing || 0)}
               </div>
-              <div style={{ padding: "8px 12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "8px 12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>Posts Count:</strong> {formatCount(selectedUser.totalPosts || 0)}
               </div>
-              <div style={{ padding: "8px 12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "8px 12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>Comments Count:</strong> {formatCount(selectedUser.totalComments || 0)}
               </div>
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
-              <div style={{ padding: "8px 12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "8px 12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>Deleted By:</strong> {selectedUser.deletedBy === "admin" ? "Admin" : "User"}
               </div>
-              <div style={{ padding: "8px 12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "8px 12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>Deleted Date:</strong> {selectedUser.deletedAt ? formatDate(selectedUser.deletedAt) : "N/A"}
               </div>
-              <div style={{ padding: "8px 12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "8px 12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>Delete Reason:</strong> {selectedUser.deleteReason || "N/A"}
               </div>
-              <div style={{ padding: "8px 12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "8px 12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>Custom Message:</strong> {selectedUser.customReason || "N/A"}
               </div>
             </div>
 
             {selectedUser.bio && (
-              <div style={{ padding: "12px", background: "#f8fafc", borderRadius: "8px", fontSize: "14px" }}>
+              <div style={{ padding: "12px", background: "var(--bg)", borderRadius: "8px", fontSize: "14px" }}>
                 <strong>About (Bio):</strong>
-                <p style={{ margin: "4px 0 0", color: "#64748b", lineHeight: 1.6 }}>{selectedUser.bio}</p>
+                <p style={{ margin: "4px 0 0", color: "var(--text-secondary)", lineHeight: 1.6 }}>{selectedUser.bio}</p>
               </div>
             )}
 
@@ -588,13 +553,13 @@ export default function AdminDeletedUsersPage() {
                 <h4 style={{ margin: "4px 0 10px", fontSize: "15px", fontWeight: "600" }}>Linked Business Records</h4>
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {selectedUser.businesses.map((business) => (
-                    <div key={business.id} style={{ border: "1px solid #e2e8f0", borderRadius: 10, padding: 12 }}>
+                    <div key={business.id} style={{ border: "1px solid var(--line)", borderRadius: 10, padding: 12 }}>
                       <div style={{ fontWeight: 700 }}>{business.businessName || "Unnamed business"}</div>
-                      <div style={{ fontSize: "13px", color: "#64748b", marginTop: 4 }}>
+                      <div style={{ fontSize: "13px", color: "var(--text-secondary)", marginTop: 4 }}>
                         Owner: {business.ownerName || "N/A"} • Phone: {business.phone || "N/A"} • Email:{" "}
                         {business.email || "N/A"}
                       </div>
-                      <div style={{ fontSize: "13px", color: "#64748b", marginTop: 4 }}>
+                      <div style={{ fontSize: "13px", color: "var(--text-secondary)", marginTop: 4 }}>
                         Category: {business.categoryName || "N/A"} • Village: {business.villageName || "N/A"} • Status:{" "}
                         {business.status || "N/A"}
                       </div>

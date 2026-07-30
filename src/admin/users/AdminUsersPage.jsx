@@ -305,32 +305,28 @@ export default function AdminUsersPage() {
       value: users.length,
       icon: FiUsers,
       color: "blue",
-      bgColor: "#eff6ff",
-      textColor: "#3b82f6",
+      bgColor: "var(--surface-subtle, #eff6ff)", textColor: "var(--brand-2, #3b82f6)",
     },
     {
       label: "Active Users",
       value: users.filter((u) => u.accountStatus === "active" || u.accountStatus === "Active").length,
       icon: FiUserCheck,
       color: "green",
-      bgColor: "#f0fdf4",
-      textColor: "#22c55e",
+      bgColor: "rgba(var(--success-rgb, 15, 157, 88), 0.08)", textColor: "var(--success, #22c55e)",
     },
     {
       label: "Verified",
       value: users.filter((user) => user.blueTickStatus === "verified" || user.blueTickStatus === "Verified").length,
       icon: FiShield,
       color: "purple",
-      bgColor: "#faf5ff",
-      textColor: "#a855f7",
+      bgColor: "rgba(var(--brand-2-rgb, 168, 85, 247), 0.08)", textColor: "var(--brand-2, #a855f7)",
     },
     {
       label: "Suspended",
       value: users.filter((user) => user.accountStatus === "suspended" || user.accountStatus === "Suspended").length,
       icon: FiUserX,
       color: "red",
-      bgColor: "#fef2f2",
-      textColor: "#ef4444",
+      bgColor: "rgba(var(--danger-rgb, 220, 38, 38), 0.08)", textColor: "var(--danger, #ef4444)",
     },
   ];
 
@@ -352,9 +348,9 @@ export default function AdminUsersPage() {
           flex-wrap: wrap !important;
           gap: 12px !important;
           padding: 16px !important;
-          background: #f8fafc !important;
+          background: var(--bg) !important;
           border-radius: 12px !important;
-          border: 1px solid #e2e8f0 !important;
+          border: 1px solid var(--line) !important;
           margin-bottom: 20px !important;
           align-items: center !important;
         }
@@ -366,23 +362,23 @@ export default function AdminUsersPage() {
         .admin-users-page .search-input-wrapper input {
           width: 100% !important;
           padding: 10px 16px 10px 44px !important;
-          border: 2px solid #e2e8f0 !important;
+          border: 2px solid var(--line) !important;
           border-radius: 10px !important;
           font-size: 14px !important;
           outline: none !important;
-          background: white !important;
+          background: var(--bg-solid) !important;
           transition: all 0.2s !important;
         }
         .admin-users-page .search-input-wrapper input:focus {
-          border-color: #3b82f6 !important;
-          box-shadow: 0 0 0 3px rgba(59,130,246,0.1) !important;
+          border-color: var(--brand-2) !important;
+          box-shadow: 0 0 0 3px rgba(var(--brand-2-rgb, 59, 130, 246), 0.1) !important;
         }
         .admin-users-page .search-icon {
           position: absolute !important;
           left: 14px !important;
           top: 50% !important;
           transform: translateY(-50%) !important;
-          color: #94a3b8 !important;
+          color: var(--text-secondary) !important;
           font-size: 18px !important;
         }
         .admin-users-page .village-select {
@@ -392,17 +388,17 @@ export default function AdminUsersPage() {
         .admin-users-page .village-select select {
           width: 100% !important;
           padding: 10px 12px !important;
-          border: 2px solid #e2e8f0 !important;
+          border: 2px solid var(--line) !important;
           border-radius: 10px !important;
           font-size: 14px !important;
-          background: white !important;
+          background: var(--bg-solid) !important;
           cursor: pointer !important;
           outline: none !important;
           transition: all 0.2s !important;
         }
         .admin-users-page .village-select select:focus {
-          border-color: #3b82f6 !important;
-          box-shadow: 0 0 0 3px rgba(59,130,246,0.1) !important;
+          border-color: var(--brand-2) !important;
+          box-shadow: 0 0 0 3px rgba(var(--brand-2-rgb, 59, 130, 246), 0.1) !important;
         }
         .admin-users-page .export-buttons {
           display: flex !important;
@@ -415,21 +411,21 @@ export default function AdminUsersPage() {
           align-items: center !important;
           gap: 6px !important;
           padding: 10px 16px !important;
-          background: white !important;
-          border: 2px solid #e2e8f0 !important;
+          background: var(--bg-solid) !important;
+          border: 2px solid var(--line) !important;
           border-radius: 10px !important;
           font-size: 13px !important;
           font-weight: 600 !important;
-          color: #475569 !important;
+          color: var(--text) !important;
           cursor: pointer !important;
           transition: all 0.2s !important;
           white-space: nowrap !important;
         }
         .admin-users-page .export-btn:hover:not(:disabled) {
-          border-color: #3b82f6 !important;
-          color: #1e40af !important;
+          border-color: var(--brand-2) !important;
+          color: var(--brand-2) !important;
           transform: translateY(-1px) !important;
-          box-shadow: 0 2px 8px rgba(59,130,246,0.15) !important;
+          box-shadow: 0 2px 8px rgba(var(--brand-2-rgb, 59, 130, 246),0.15) !important;
         }
         .admin-users-page .export-btn:disabled {
           opacity: 0.5 !important;
@@ -449,11 +445,11 @@ export default function AdminUsersPage() {
           flex: 1 1 140px !important;
           min-width: 120px !important;
           padding: 8px 12px !important;
-          border: 2px solid #e2e8f0 !important;
+          border: 2px solid var(--line) !important;
           border-radius: 8px !important;
           font-size: 13px !important;
-          background: white !important;
-          color: #334155 !important;
+          background: var(--bg-solid) !important;
+          color: var(--text) !important;
           font-weight: 500 !important;
           cursor: pointer !important;
           outline: none !important;
@@ -461,25 +457,25 @@ export default function AdminUsersPage() {
         }
         .admin-users-page .filters-row select:focus,
         .admin-users-page .filters-row input[type="date"]:focus {
-          border-color: #3b82f6 !important;
-          box-shadow: 0 0 0 3px rgba(59,130,246,0.1) !important;
+          border-color: var(--brand-2) !important;
+          box-shadow: 0 0 0 3px rgba(var(--brand-2-rgb, 59, 130, 246), 0.1) !important;
         }
         .admin-users-page .filters-row .birthday-clear-btn {
           padding: 8px 14px !important;
-          border: 2px solid #fca5a5 !important;
+          border: 2px solid var(--danger) !important;
           border-radius: 8px !important;
           font-size: 12px !important;
           font-weight: 600 !important;
-          background: #fef2f2 !important;
-          color: #dc2626 !important;
+          background: rgba(var(--danger-rgb, 220, 38, 38), 0.08) !important;
+          color: var(--danger) !important;
           cursor: pointer !important;
           transition: all 0.2s !important;
           white-space: nowrap !important;
           flex: 0 0 auto !important;
         }
         .admin-users-page .filters-row .birthday-clear-btn:hover {
-          background: #fee2e2 !important;
-          border-color: #f87171 !important;
+          background: rgba(var(--danger-rgb, 220, 38, 38), 0.1) !important;
+          border-color: var(--danger) !important;
         }
 
         /* ===== STATS CARDS ===== */
@@ -490,19 +486,19 @@ export default function AdminUsersPage() {
           margin-bottom: 24px !important;
         }
         .admin-users-page .stat-card {
-          background: white !important;
-          border: 1px solid #e2e8f0 !important;
+          background: var(--bg-solid) !important;
+          border: 1px solid var(--line) !important;
           border-radius: 12px !important;
           padding: 20px !important;
           display: flex !important;
           align-items: center !important;
           gap: 16px !important;
           transition: all 0.2s !important;
-          box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+          box-shadow: var(--shadow) !important;
         }
         .admin-users-page .stat-card:hover {
           transform: translateY(-2px) !important;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+          box-shadow: var(--shadow) !important;
         }
         .admin-users-page .stat-icon {
           width: 48px !important;
@@ -518,14 +514,14 @@ export default function AdminUsersPage() {
         }
         .admin-users-page .stat-label {
           font-size: 13px !important;
-          color: #64748b !important;
+          color: var(--text-secondary) !important;
           font-weight: 500 !important;
           margin-bottom: 2px !important;
         }
         .admin-users-page .stat-value {
           font-size: 28px !important;
           font-weight: 700 !important;
-          color: #0f172a !important;
+          color: var(--text) !important;
           line-height: 1.2 !important;
         }
 
@@ -534,8 +530,8 @@ export default function AdminUsersPage() {
           overflow-x: auto !important;
           -webkit-overflow-scrolling: touch !important;
           border-radius: 12px !important;
-          border: 1px solid #e2e8f0 !important;
-          background: white !important;
+          border: 1px solid var(--line) !important;
+          background: var(--bg-solid) !important;
           width: 100% !important;
         }
         .admin-users-page .table-wrap table {
@@ -545,10 +541,10 @@ export default function AdminUsersPage() {
           font-size: 14px !important;
         }
         .admin-users-page .table-wrap th {
-          background: #f8fafc !important;
+          background: var(--bg) !important;
           font-weight: 600 !important;
-          color: #475569 !important;
-          border-bottom: 2px solid #e2e8f0 !important;
+          color: var(--text) !important;
+          border-bottom: 2px solid var(--line) !important;
           padding: 12px 10px !important;
           text-align: left !important;
           white-space: nowrap !important;
@@ -558,7 +554,7 @@ export default function AdminUsersPage() {
         }
         .admin-users-page .table-wrap td {
           padding: 10px !important;
-          border-bottom: 1px solid #f1f5f9 !important;
+          border-bottom: 1px solid var(--line) !important;
           white-space: nowrap !important;
         }
         .admin-users-page .table-wrap td img {
@@ -575,8 +571,8 @@ export default function AdminUsersPage() {
           align-items: center !important;
           justify-content: center !important;
           margin: 0 auto !important;
-          background: #e2e8f0 !important;
-          color: #475569 !important;
+          background: var(--surface-subtle) !important;
+          color: var(--text) !important;
           font-size: 14px !important;
           font-weight: 600 !important;
         }
@@ -593,8 +589,8 @@ export default function AdminUsersPage() {
           padding: 3px 8px !important;
           font-size: 10px !important;
           border-radius: 6px !important;
-          border: 1px solid #e2e8f0 !important;
-          background: white !important;
+          border: 1px solid var(--line) !important;
+          background: var(--bg-solid) !important;
           cursor: pointer !important;
           transition: all 0.2s !important;
           font-weight: 500 !important;
@@ -603,34 +599,34 @@ export default function AdminUsersPage() {
         }
         .admin-users-page .action-row .btn-sm:hover:not(:disabled) {
           transform: translateY(-1px) !important;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+          box-shadow: var(--shadow) !important;
         }
         .admin-users-page .action-row .btn-sm:disabled {
           opacity: 0.4 !important;
           cursor: not-allowed !important;
         }
         .admin-users-page .action-row .btn-primary {
-          background: #3b82f6 !important;
-          color: white !important;
-          border-color: #3b82f6 !important;
+          background: var(--brand-2) !important;
+          color: var(--bg-solid) !important;
+          border-color: var(--brand-2) !important;
         }
         .admin-users-page .action-row .btn-warning {
-          background: #f59e0b !important;
-          color: white !important;
-          border-color: #f59e0b !important;
+          background: var(--warning) !important;
+          color: var(--bg-solid) !important;
+          border-color: var(--warning) !important;
         }
         .admin-users-page .action-row .btn-danger {
-          background: #ef4444 !important;
-          color: white !important;
-          border-color: #ef4444 !important;
+          background: var(--danger) !important;
+          color: var(--bg-solid) !important;
+          border-color: var(--danger) !important;
         }
         .admin-users-page .action-row .btn-secondary {
-          background: #f1f5f9 !important;
-          color: #475569 !important;
-          border-color: #e2e8f0 !important;
+          background: var(--bg) !important;
+          color: var(--text) !important;
+          border-color: var(--line) !important;
         }
         .admin-users-page .action-row .btn-secondary:hover:not(:disabled) {
-          background: #e2e8f0 !important;
+          background: var(--line) !important;
         }
         .admin-users-page .action-row .icon-btn {
           flex-shrink: 0 !important;
@@ -648,7 +644,7 @@ export default function AdminUsersPage() {
           gap: 12px !important;
         }
         .admin-users-page .pagination .info {
-          color: #94a3b8 !important;
+          color: var(--text-secondary) !important;
           font-size: 14px !important;
         }
         .admin-users-page .pagination .controls {
@@ -659,17 +655,17 @@ export default function AdminUsersPage() {
         .admin-users-page .pagination .controls button {
           padding: 8px 16px !important;
           border-radius: 8px !important;
-          border: 1px solid #e2e8f0 !important;
-          background: white !important;
+          border: 1px solid var(--line) !important;
+          background: var(--bg-solid) !important;
           cursor: pointer !important;
           transition: all 0.2s !important;
           font-size: 14px !important;
           font-weight: 500 !important;
-          color: #475569 !important;
+          color: var(--text) !important;
         }
         .admin-users-page .pagination .controls button:hover:not(:disabled) {
-          background: #f8fafc !important;
-          border-color: #94a3b8 !important;
+          background: var(--bg) !important;
+          border-color: var(--text-secondary) !important;
         }
         .admin-users-page .pagination .controls button:disabled {
           opacity: 0.4 !important;
@@ -677,10 +673,10 @@ export default function AdminUsersPage() {
         }
         .admin-users-page .pagination .controls .page-badge {
           padding: 6px 14px !important;
-          background: #f1f5f9 !important;
+          background: var(--bg) !important;
           border-radius: 8px !important;
           font-size: 14px !important;
-          color: #475569 !important;
+          color: var(--text) !important;
           font-weight: 600 !important;
         }
 
@@ -689,19 +685,12 @@ export default function AdminUsersPage() {
           height: 8px !important;
         }
         .admin-users-page .table-wrap::-webkit-scrollbar-track {
-          background: #f1f5f9 !important;
+          background: var(--bg) !important;
           border-radius: 4px !important;
         }
         .admin-users-page .table-wrap::-webkit-scrollbar-thumb {
-          background: #cbd5e1 !important;
+          background: var(--text-secondary) !important;
           border-radius: 4px !important;
-        }
-        .admin-users-page .table-wrap::-webkit-scrollbar-thumb:hover {
-          background: #94a3b8 !important;
-        }
-        .admin-users-page .table-wrap {
-          scrollbar-width: thin !important;
-          scrollbar-color: #cbd5e1 #f1f5f9 !important;
         }
 
         /* ===== RESPONSIVE BREAKPOINTS ===== */
@@ -835,95 +824,6 @@ export default function AdminUsersPage() {
           }
         }
 
-        /* Dark mode support */
-        @media (prefers-color-scheme: dark) {
-          .admin-users-page .search-bar-container {
-            background: #1e293b !important;
-            border-color: #334155 !important;
-          }
-          .admin-users-page .search-input-wrapper input {
-            background: #0f172a !important;
-            border-color: #334155 !important;
-            color: #e2e8f0 !important;
-          }
-          .admin-users-page .search-input-wrapper input:focus {
-            border-color: #3b82f6 !important;
-          }
-          .admin-users-page .village-select select {
-            background: #0f172a !important;
-            border-color: #334155 !important;
-            color: #e2e8f0 !important;
-          }
-          .admin-users-page .export-btn {
-            background: #0f172a !important;
-            border-color: #334155 !important;
-            color: #94a3b8 !important;
-          }
-          .admin-users-page .export-btn:hover:not(:disabled) {
-            border-color: #3b82f6 !important;
-            color: #60a5fa !important;
-          }
-          .admin-users-page .filters-row select {
-            background: #0f172a !important;
-            border-color: #334155 !important;
-            color: #e2e8f0 !important;
-          }
-          .admin-users-page .stat-card {
-            background: #1e293b !important;
-            border-color: #334155 !important;
-          }
-          .admin-users-page .stat-value {
-            color: #f1f5f9 !important;
-          }
-          .admin-users-page .table-wrap {
-            background: #1e293b !important;
-            border-color: #334155 !important;
-          }
-          .admin-users-page .table-wrap th {
-            background: #0f172a !important;
-            color: #94a3b8 !important;
-            border-bottom-color: #334155 !important;
-          }
-          .admin-users-page .table-wrap td {
-            border-bottom-color: #334155 !important;
-            color: #e2e8f0 !important;
-          }
-          .admin-users-page .table-wrap .profile-placeholder {
-            background: #334155 !important;
-            color: #94a3b8 !important;
-          }
-          .admin-users-page .action-row .btn-secondary {
-            background: #334155 !important;
-            color: #e2e8f0 !important;
-            border-color: #475569 !important;
-          }
-          .admin-users-page .action-row .btn-secondary:hover:not(:disabled) {
-            background: #475569 !important;
-          }
-          .admin-users-page .pagination .controls button {
-            background: #1e293b !important;
-            border-color: #334155 !important;
-            color: #e2e8f0 !important;
-          }
-          .admin-users-page .pagination .controls button:hover:not(:disabled) {
-            background: #334155 !important;
-          }
-          .admin-users-page .pagination .controls .page-badge {
-            background: #334155 !important;
-            color: #e2e8f0 !important;
-          }
-          .admin-users-page .table-wrap::-webkit-scrollbar-track {
-            background: #1e293b !important;
-          }
-          .admin-users-page .table-wrap::-webkit-scrollbar-thumb {
-            background: #475569 !important;
-          }
-          .admin-users-page .table-wrap::-webkit-scrollbar-thumb:hover {
-            background: #64748b !important;
-          }
-          .admin-users-page .table-wrap {
-            scrollbar-color: #475569 #1e293b !important;
-          }
         }
       `}</style>
 
@@ -1085,11 +985,11 @@ export default function AdminUsersPage() {
                       <td style={{ textAlign: 'center' }}>{formatCount(user.followers)}</td>
                       <td style={{ textAlign: 'center' }}>
                         {user.accountStatus === "hidden" ? (
-                          <MdVisibilityOff style={{ color: '#f59e0b' }} />
+                          <MdVisibilityOff style={{ color: 'var(--warning)' }} />
                         ) : user.accountStatus === "suspended" ? (
-                          <MdBlock style={{ color: '#ef4444' }} />
+                          <MdBlock style={{ color: 'var(--danger)' }} />
                         ) : (
-                          <MdVisibility style={{ color: '#3b82f6' }} />
+                          <MdVisibility style={{ color: 'var(--brand-2)' }} />
                         )}
                         <span style={{ marginLeft: 6 }}>{user.accountStatus}</span>
                       </td>
@@ -1206,30 +1106,30 @@ export default function AdminUsersPage() {
         ) : selectedUser ? (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Profile Photo: {selectedUser.profileImageUrl ? "Available" : "N/A"}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Name: {selectedUser.name || "N/A"}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Username: @{selectedUser.username || "N/A"}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Email: {selectedUser.email || "N/A"}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Phone: {selectedUser.mobile || "N/A"}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Village: {selectedUser.villageName || "N/A"}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Blue Tick: {selectedUser.blueTickStatus}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Status: {selectedUser.accountStatus}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Text Post: {selectedUser.canCreateTextPost !== false ? "Enabled" : "Disabled"}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Poll Post: {selectedUser.canCreatePollPost !== false ? "Enabled" : "Disabled"}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Image Post: {selectedUser.canCreateImagePost ? "Enabled" : "Disabled"}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Image + Text Post: {selectedUser.canCreateImageTextPost ? "Enabled" : "Disabled"}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Profile Photo: {selectedUser.profileImageUrl ? "Available" : "N/A"}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Name: {selectedUser.name || "N/A"}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Username: @{selectedUser.username || "N/A"}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Email: {selectedUser.email || "N/A"}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Phone: {selectedUser.mobile || "N/A"}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Village: {selectedUser.villageName || "N/A"}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Blue Tick: {selectedUser.blueTickStatus}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Status: {selectedUser.accountStatus}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Text Post: {selectedUser.canCreateTextPost !== false ? "Enabled" : "Disabled"}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Poll Post: {selectedUser.canCreatePollPost !== false ? "Enabled" : "Disabled"}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Image Post: {selectedUser.canCreateImagePost ? "Enabled" : "Disabled"}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Image + Text Post: {selectedUser.canCreateImageTextPost ? "Enabled" : "Disabled"}</div>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Followers: {formatCount(selectedUser.followers)}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Following: {formatCount(selectedUser.following)}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Posts: {formatCount(selectedUser.posts)}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Comments: {formatCount(selectedUser.comments)}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Agrees: {formatCount(selectedUser.agreeCount)}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Disagrees: {formatCount(selectedUser.disagreeCount)}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Shares: {formatCount(selectedUser.shares)}</div>
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>Search Visibility: {selectedUser.searchVisibility ? "Visible" : "Hidden"}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Followers: {formatCount(selectedUser.followers)}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Following: {formatCount(selectedUser.following)}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Posts: {formatCount(selectedUser.posts)}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Comments: {formatCount(selectedUser.comments)}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Agrees: {formatCount(selectedUser.agreeCount)}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Disagrees: {formatCount(selectedUser.disagreeCount)}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Shares: {formatCount(selectedUser.shares)}</div>
+              <div style={{ padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px', fontSize: '14px' }}>Search Visibility: {selectedUser.searchVisibility ? "Visible" : "Hidden"}</div>
             </div>
-            {selectedUser.bio ? <p style={{ margin: 0, color: '#64748b', lineHeight: 1.7 }}>{selectedUser.bio}</p> : null}
+            {selectedUser.bio ? <p style={{ margin: 0, color: 'var(--text-secondary)', lineHeight: 1.7 }}>{selectedUser.bio}</p> : null}
           </div>
         ) : null}
       </AdminModal>
@@ -1267,69 +1167,69 @@ export default function AdminUsersPage() {
         {editingUser ? (
           <form id="admin-user-form" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }} onSubmit={handleSaveEdit}>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Name</span>
-              <input style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none' }} value={editingUser.name || ""} onChange={(event) => setEditingUser((value) => ({ ...value, name: event.target.value }))} placeholder="Name" />
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Name</span>
+              <input style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none' }} value={editingUser.name || ""} onChange={(event) => setEditingUser((value) => ({ ...value, name: event.target.value }))} placeholder="Name" />
             </label>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Username</span>
-              <input style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none' }} value={editingUser.username || ""} onChange={(event) => setEditingUser((value) => ({ ...value, username: event.target.value }))} placeholder="Username" />
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Username</span>
+              <input style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none' }} value={editingUser.username || ""} onChange={(event) => setEditingUser((value) => ({ ...value, username: event.target.value }))} placeholder="Username" />
             </label>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Email</span>
-              <input style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none' }} value={editingUser.email || ""} onChange={(event) => setEditingUser((value) => ({ ...value, email: event.target.value }))} placeholder="Email" />
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Email</span>
+              <input style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none' }} value={editingUser.email || ""} onChange={(event) => setEditingUser((value) => ({ ...value, email: event.target.value }))} placeholder="Email" />
             </label>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Phone</span>
-              <input style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none' }} value={editingUser.mobile || ""} onChange={(event) => setEditingUser((value) => ({ ...value, mobile: event.target.value }))} placeholder="Phone" />
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Phone</span>
+              <input style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none' }} value={editingUser.mobile || ""} onChange={(event) => setEditingUser((value) => ({ ...value, mobile: event.target.value }))} placeholder="Phone" />
             </label>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Village ID</span>
-              <input style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none' }} value={editingUser.villageId || ""} onChange={(event) => setEditingUser((value) => ({ ...value, villageId: event.target.value }))} placeholder="Village ID" />
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Village ID</span>
+              <input style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none' }} value={editingUser.villageId || ""} onChange={(event) => setEditingUser((value) => ({ ...value, villageId: event.target.value }))} placeholder="Village ID" />
             </label>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Followers Count</span>
-              <input style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none' }} type="number" min="0" value={editingUser.followers ?? 0} onChange={(event) => setEditingUser((value) => ({ ...value, followers: Number(event.target.value) }))} placeholder="Followers count" />
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Followers Count</span>
+              <input style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none' }} type="number" min="0" value={editingUser.followers ?? 0} onChange={(event) => setEditingUser((value) => ({ ...value, followers: Number(event.target.value) }))} placeholder="Followers count" />
             </label>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Following Count</span>
-              <input style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none' }} type="number" min="0" value={editingUser.following ?? 0} onChange={(event) => setEditingUser((value) => ({ ...value, following: Number(event.target.value) }))} placeholder="Following count" />
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Following Count</span>
+              <input style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none' }} type="number" min="0" value={editingUser.following ?? 0} onChange={(event) => setEditingUser((value) => ({ ...value, following: Number(event.target.value) }))} placeholder="Following count" />
             </label>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Posts Count</span>
-              <input style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none' }} type="number" min="0" value={editingUser.posts ?? 0} onChange={(event) => setEditingUser((value) => ({ ...value, posts: Number(event.target.value) }))} placeholder="Posts count" />
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Posts Count</span>
+              <input style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none' }} type="number" min="0" value={editingUser.posts ?? 0} onChange={(event) => setEditingUser((value) => ({ ...value, posts: Number(event.target.value) }))} placeholder="Posts count" />
             </label>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Comments Count</span>
-              <input style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none' }} type="number" min="0" value={editingUser.comments ?? 0} onChange={(event) => setEditingUser((value) => ({ ...value, comments: Number(event.target.value) }))} placeholder="Comments count" />
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Comments Count</span>
+              <input style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none' }} type="number" min="0" value={editingUser.comments ?? 0} onChange={(event) => setEditingUser((value) => ({ ...value, comments: Number(event.target.value) }))} placeholder="Comments count" />
             </label>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Agree Count</span>
-              <input style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none' }} type="number" min="0" value={editingUser.agreeCount ?? 0} onChange={(event) => setEditingUser((value) => ({ ...value, agreeCount: Number(event.target.value) }))} placeholder="Agree count" />
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Agree Count</span>
+              <input style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none' }} type="number" min="0" value={editingUser.agreeCount ?? 0} onChange={(event) => setEditingUser((value) => ({ ...value, agreeCount: Number(event.target.value) }))} placeholder="Agree count" />
             </label>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Disagree Count</span>
-              <input style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none' }} type="number" min="0" value={editingUser.disagreeCount ?? 0} onChange={(event) => setEditingUser((value) => ({ ...value, disagreeCount: Number(event.target.value) }))} placeholder="Disagree count" />
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Disagree Count</span>
+              <input style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none' }} type="number" min="0" value={editingUser.disagreeCount ?? 0} onChange={(event) => setEditingUser((value) => ({ ...value, disagreeCount: Number(event.target.value) }))} placeholder="Disagree count" />
             </label>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Shares Count</span>
-              <input style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none' }} type="number" min="0" value={editingUser.shares ?? 0} onChange={(event) => setEditingUser((value) => ({ ...value, shares: Number(event.target.value) }))} placeholder="Shares count" />
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Shares Count</span>
+              <input style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none' }} type="number" min="0" value={editingUser.shares ?? 0} onChange={(event) => setEditingUser((value) => ({ ...value, shares: Number(event.target.value) }))} placeholder="Shares count" />
             </label>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Text Post</span>
-              <select style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none', background: '#f1f5f9' }} disabled>
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Text Post</span>
+              <select style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none', background: 'var(--bg)' }} disabled>
                 <option value="1">Always Enabled</option>
               </select>
             </label>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Poll Post</span>
-              <select style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none', background: '#f1f5f9' }} disabled>
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Poll Post</span>
+              <select style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none', background: 'var(--bg)' }} disabled>
                 <option value="1">Always Enabled</option>
               </select>
             </label>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Image Post</span>
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Image Post</span>
               <select
-                style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none' }}
+                style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none' }}
                 value={editingUser.canCreateImagePost ? "1" : "0"}
                 onChange={(event) => setEditingUser((value) => ({ ...value, canCreateImagePost: event.target.value === "1" }))}
               >
@@ -1338,9 +1238,9 @@ export default function AdminUsersPage() {
               </select>
             </label>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Image + Text Post</span>
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Image + Text Post</span>
               <select
-                style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none' }}
+                style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none' }}
                 value={editingUser.canCreateImageTextPost ? "1" : "0"}
                 onChange={(event) => setEditingUser((value) => ({ ...value, canCreateImageTextPost: event.target.value === "1" }))}
               >
@@ -1349,8 +1249,8 @@ export default function AdminUsersPage() {
               </select>
             </label>
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Blue Tick Status</span>
-              <select style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none' }} value={editingUser.blueTickStatus || "none"} onChange={(event) => setEditingUser((value) => ({ ...value, blueTickStatus: event.target.value }))}>
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Blue Tick Status</span>
+              <select style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none' }} value={editingUser.blueTickStatus || "none"} onChange={(event) => setEditingUser((value) => ({ ...value, blueTickStatus: event.target.value }))}>
                 <option value="none">No blue tick</option>
                 <option value="pending">Pending</option>
                 <option value="verified">Verified</option>
@@ -1359,18 +1259,18 @@ export default function AdminUsersPage() {
             </label>
 
             <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Account Status</span>
-              <select style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none' }} value={editingUser.accountStatus || "active"} onChange={(event) => setEditingUser((value) => ({ ...value, accountStatus: event.target.value }))}>
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Account Status</span>
+              <select style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none' }} value={editingUser.accountStatus || "active"} onChange={(event) => setEditingUser((value) => ({ ...value, accountStatus: event.target.value }))}>
                 <option value="active">Active</option>
                 <option value="hidden">Hidden</option>
                 <option value="suspended">Suspended</option>
               </select>
             </label>
-            <div style={{ gridColumn: "1 / -1", padding: '8px 12px', background: '#fef3c7', borderRadius: '8px', fontSize: '13px', color: '#92400e' }}>
+            <div style={{ gridColumn: "1 / -1", padding: '8px 12px', background: 'rgba(var(--warning-rgb, 234, 179, 8), 0.15)', borderRadius: '8px', fontSize: '13px', color: 'var(--warning)' }}>
               💡 Active: normal account, Hidden: login allowed but profile and posts stay out of public view, Suspended: login blocked and session access revoked.
             </div>
-            <label style={{ gridColumn: "1 / -1", display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 12px', background: '#f8fafc', borderRadius: '8px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Search visibility</span>
+            <label style={{ gridColumn: "1 / -1", display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 12px', background: 'var(--bg)', borderRadius: '8px' }}>
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Search visibility</span>
               <input
                 type="checkbox"
                 checked={Boolean(editingUser.searchVisibility)}
@@ -1378,8 +1278,8 @@ export default function AdminUsersPage() {
               />
             </label>
             <label style={{ gridColumn: "1 / -1", display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500, color: '#475569' }}>Bio</span>
-              <textarea style={{ padding: '8px 12px', border: '2px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none', minHeight: '80px', resize: 'vertical' }} value={editingUser.bio || ""} onChange={(event) => setEditingUser((value) => ({ ...value, bio: event.target.value }))} placeholder="Bio" />
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text)' }}>Bio</span>
+              <textarea style={{ padding: '8px 12px', border: '2px solid var(--line)', borderRadius: '8px', fontSize: '14px', outline: 'none', minHeight: '80px', resize: 'vertical' }} value={editingUser.bio || ""} onChange={(event) => setEditingUser((value) => ({ ...value, bio: event.target.value }))} placeholder="Bio" />
             </label>
           </form>
         ) : null}

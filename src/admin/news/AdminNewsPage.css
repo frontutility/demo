@@ -201,17 +201,17 @@
 
 .admin-status-pill.tone-success {
   background: rgba(16, 185, 129, 0.12);
-  color: #059669;
+  color: var(--success, #059669);
 }
 
 .admin-status-pill.tone-warning {
   background: rgba(245, 158, 11, 0.12);
-  color: #d97706;
+  color: var(--warning, #d97706);
 }
 
 .admin-status-pill.tone-neutral {
   background: rgba(100, 116, 139, 0.12);
-  color: #64748b;
+  color: var(--text-secondary, #64748b);
 }
 
 /* ===== ACTIONS ===== */
@@ -250,19 +250,19 @@
 
 .admin-icon-btn.tone-success:hover {
   border-color: rgba(16, 185, 129, 0.3);
-  color: #059669;
+  color: var(--success, #059669);
   background: rgba(16, 185, 129, 0.06);
 }
 
 .admin-icon-btn.tone-warning:hover {
   border-color: rgba(245, 158, 11, 0.3);
-  color: #d97706;
+  color: var(--warning, #d97706);
   background: rgba(245, 158, 11, 0.06);
 }
 
 .admin-icon-btn.tone-danger:hover {
   border-color: rgba(239, 68, 68, 0.3);
-  color: #dc2626;
+  color: var(--danger, #dc2626);
   background: rgba(239, 68, 68, 0.06);
 }
 
@@ -523,12 +523,12 @@
 }
 
 .btn-danger {
-  background: #ef4444;
-  color: white;
+  background: var(--danger, #ef4444);
+  color: var(--bg-solid, white);
 }
 
 .btn-danger:hover:not(:disabled) {
-  background: #dc2626;
+  background: var(--danger, #dc2626);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3);
 }

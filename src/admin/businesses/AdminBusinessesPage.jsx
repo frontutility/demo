@@ -464,11 +464,11 @@ export default function AdminBusinessesPage() {
         .summary-card { border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:6px; background: var(--bg-solid); border:1px solid var(--line); }
         .summary-card span { color: var(--text-secondary); font-size:13px; }
         .summary-card strong { font-size:24px; }
-        .summary-card-primary { background: rgba(59,130,246,.08); border-color: rgba(59,130,246,.18); }
-        .summary-card-success { background: rgba(16,185,129,.08); border-color: rgba(16,185,129,.18); }
-        .summary-card-warning { background: rgba(234,179,8,.08); border-color: rgba(234,179,8,.18); }
-        .summary-card-danger { background: rgba(239,68,68,.08); border-color: rgba(239,68,68,.18); }
-        .summary-card-muted { background: rgba(107,114,128,.08); border-color: rgba(107,114,128,.18); }
+        .summary-card-primary { background: rgba(var(--brand-2-rgb, 59, 130, 246),.08); border-color: rgba(var(--brand-2-rgb, 59, 130, 246),.18); }
+        .summary-card-success { background: rgba(var(--success-rgb, 16, 185, 129),.08); border-color: rgba(var(--success-rgb, 16, 185, 129),.18); }
+        .summary-card-warning { background: rgba(var(--warning-rgb, 234, 179, 8),.08); border-color: rgba(var(--warning-rgb, 234, 179, 8),.18); }
+        .summary-card-danger { background: rgba(var(--danger-rgb, 239, 68, 68),.08); border-color: rgba(var(--danger-rgb, 239, 68, 68),.18); }
+        .summary-card-muted { background: rgba(var(--text-secondary-rgb, 107, 114, 128),.08); border-color: rgba(var(--text-secondary-rgb, 107, 114, 128),.18); }
         .tab-row { display:flex; gap:8px; flex-wrap:wrap; }
         .business-filter-bar { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:16px; align-items:flex-end; }
         .filter-item { display:flex; flex-direction:column; gap:8px; min-width:220px; }
@@ -481,10 +481,10 @@ export default function AdminBusinessesPage() {
         .business-modal-grid label { font-size:13px; color: var(--text-secondary); display:block; margin-bottom:4px; }
         .admin-table-wrap { overflow-x:auto; }
         .status-pill.small { padding:4px 8px; font-size:11px; text-transform:uppercase; }
-        .status-pill.pending { background: rgba(245,158,11,.16); color:#b45309; }
-        .status-pill.approved { background: rgba(16,185,129,.16); color:#047857; }
-        .status-pill.rejected { background: rgba(239,68,68,.16); color:#b91c1c; }
-        .status-pill.suspended { background: rgba(107,114,128,.16); color:#374151; }
+        .status-pill.pending { background: rgba(245,158,11,.16); color:var(--warning, #b45309); }
+        .status-pill.approved { background: rgba(var(--success-rgb, 16, 185, 129),.16); color:var(--success, #047857); }
+        .status-pill.rejected { background: rgba(var(--danger-rgb, 239, 68, 68),.16); color:var(--danger, #b91c1c); }
+        .status-pill.suspended { background: rgba(var(--text-secondary-rgb, 107, 114, 128),.16); color:var(--text, #374151); }
         .action-stack { display:flex; gap:6px; flex-wrap:wrap; }
         .field-block { display:flex; flex-direction:column; gap:6px; }
         .field-span-2 { grid-column: span 2; }

@@ -282,7 +282,7 @@ export default function AdminNewsPage() {
           height: 48px;
           border-radius: 12px;
           object-fit: cover;
-          background: rgba(15, 23, 42, 0.08);
+          background: rgba(var(--text-rgb, 15, 23, 42), 0.08);
         }
         .responsive-admin-page .news-actions {
           display: flex;
@@ -295,7 +295,7 @@ export default function AdminNewsPage() {
           object-fit: cover;
           border-radius: 18px;
           margin-bottom: 12px;
-          background: rgba(15, 23, 42, 0.08);
+          background: rgba(var(--text-rgb, 15, 23, 42), 0.08);
         }
         .responsive-admin-page .news-form {
           display: grid;
