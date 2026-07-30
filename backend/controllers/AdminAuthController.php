@@ -68,7 +68,11 @@ final class AdminAuthController extends BaseController
     public function me(): void
     {
         $token = $this->bearerToken();
-        $claims = $token ? JwtService::parse($token) : [];
+        if (!$token) {
+            $this->json(null, 'Current admin session');
+            return;
+        }
+        $claims = JwtService::parse($token);
         $admin = null;
         if (!empty($claims['sub'])) {
             $admin = (new Admin())->find((int) $claims['sub']);
@@ -76,7 +80,7 @@ final class AdminAuthController extends BaseController
                 $admin = $this->sanitizeAdmin($admin);
             }
         }
-        $this->json(['token' => $token, 'claims' => $claims, 'admin' => $admin], 'Current admin session');
+        $this->json($admin ?: null, 'Current admin session');
     }
 
     public function logout(): void

@@ -33,6 +33,7 @@ class HelpCenterController extends CrudController
 
     public function store(): array
     {
+        $this->requireAdmin();
         $data = $this->input();
         if (array_key_exists('answer', $data)) $data['answer'] = HtmlSanitizer::clean((string) $data['answer']);
         $id = $this->model()->create($data);
@@ -41,6 +42,7 @@ class HelpCenterController extends CrudController
 
     public function update(string $id): array
     {
+        $this->requireAdmin();
         $data = $this->input();
         if (array_key_exists('answer', $data)) $data['answer'] = HtmlSanitizer::clean((string) $data['answer']);
         $this->model()->update((int) $id, $data);
@@ -57,6 +59,12 @@ class HelpCenterController extends CrudController
         }
 
         return $this->normalizeArticles($this->model()->all($filters, $this->listOrder()));
+    }
+
+    public function destroy(string $id): array
+    {
+        $this->requireAdmin();
+        return parent::destroy($id);
     }
 
     public function bySlug(string $slug): array
@@ -134,6 +142,14 @@ class HelpCenterController extends CrudController
             'helpfulCount' => (int) ($updated['helpful_count'] ?? 0),
             'notHelpfulCount' => (int) ($updated['not_helpful_count'] ?? 0),
         ];
+    }
+
+    private function requireAdmin(): void
+    {
+        $claims = $this->currentUserClaims();
+        if (($claims['type'] ?? '') !== 'admin' || !in_array($claims['role'] ?? '', ['super_admin', 'moderator', 'editor'], true)) {
+            $this->fail('Forbidden', 403);
+        }
     }
 
     private function searchArticles(string $term, array $filters = [], string $orderBy = 'helpful_count DESC'): array
