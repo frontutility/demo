@@ -23,9 +23,7 @@ abstract class BaseController
     {
         if ($status >= 500) {
             error_log(sprintf('[api-error] status=%d message=%s', $status, $message));
-            if (Env::get('APP_DEBUG') !== 'true' || Env::get('APP_ENV') === 'production') {
-                $message = 'An unexpected server error occurred.';
-            }
+            $message = 'An unexpected server error occurred.';
         }
         Response::error($message, $status, $errors);
     }

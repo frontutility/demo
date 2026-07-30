@@ -262,7 +262,7 @@ final class AdminPostController extends PostController
             if ($this->db()->inTransaction()) {
                 $this->db()->rollBack();
             }
-            $this->fail('Could not pin post globally: ' . $e->getMessage(), 500);
+            $this->fail('Could not pin post globally.', 500);
         }
 
         return $this->show($id);

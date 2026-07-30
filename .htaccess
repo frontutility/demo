@@ -3,7 +3,10 @@ Options -MultiViews
   Header always set Cross-Origin-Opener-Policy "same-origin-allow-popups"
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "DENY"
-  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; frame-src 'self' https://grownkt-c3e75.firebaseapp.com https://*.firebaseapp.com https://accounts.google.com; script-src 'self' https://www.gstatic.com https://apis.google.com; connect-src 'self' http://localhost http://127.0.0.1 https://www.gstatic.com https://apis.google.com https://*.googleapis.com https://securetoken.googleapis.com https://identitytoolkit.googleapis.com; img-src 'self' http://localhost http://127.0.0.1 data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; form-action 'self'"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; frame-src 'self' https://grownkt-c3e75.firebaseapp.com https://*.firebaseapp.com https://accounts.google.com; script-src 'self' https://www.gstatic.com https://apis.google.com; connect-src 'self' http://localhost http://127.0.0.1 https://www.gstatic.com https://apis.google.com https://*.googleapis.com https://securetoken.googleapis.com https://identitytoolkit.googleapis.com; img-src 'self' http://localhost http://127.0.0.1 data: https://*.googleapis.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; form-action 'self'"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
 </IfModule>
 RewriteEngine On
 RewriteBase /connectnkt/frontend/

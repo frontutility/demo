@@ -479,7 +479,6 @@ class PostController extends CrudController
 
         try {
             $payload = [
-                'user_id' => $userId,
                 'category_id' => $categoryId,
                 'post_type' => $postType,
                 'content' => $content !== '' ? $content : null,
@@ -493,6 +492,9 @@ class PostController extends CrudController
             }
 
             $id = $this->model()->create($payload);
+            if ($id > 0) {
+                $db->prepare('UPDATE posts SET user_id = :uid WHERE id = :id LIMIT 1')->execute(['uid' => $userId, 'id' => $id]);
+            }
 
             if ($storedImagePath !== null) {
                 (new PostImage($db))->create([
@@ -947,7 +949,7 @@ class PostController extends CrudController
             if (str_contains(strtolower($e->getMessage()), 'duplicate')) {
                 $this->fail('You have already voted in this poll.', 409);
             }
-            $this->fail('Could not save your vote: ' . $e->getMessage(), 500);
+            $this->fail('Could not save your vote.', 500);
         }
 
         return [
@@ -1036,7 +1038,7 @@ class PostController extends CrudController
             if ($this->db()->inTransaction()) {
                 $this->db()->rollBack();
             }
-            $this->fail('Could not pin post: ' . $e->getMessage(), 500);
+            $this->fail('Could not pin post.', 500);
         }
     }
 
@@ -1088,7 +1090,7 @@ class PostController extends CrudController
             if ($this->db()->inTransaction()) {
                 $this->db()->rollBack();
             }
-            $this->fail('Could not pin post globally: ' . $e->getMessage(), 500);
+            $this->fail('Could not pin post globally.', 500);
         }
 
         return $this->normalizePost($this->model()->find($postId) ?? ['id' => $postId]);

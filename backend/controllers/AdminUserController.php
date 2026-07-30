@@ -377,7 +377,7 @@ final class AdminUserController extends UserController
             $this->db()->commit();
         } catch (\Throwable $e) {
             $this->db()->rollBack();
-            $this->fail('Failed to update user: ' . $e->getMessage(), 500);
+            $this->fail('Failed to update user.', 500);
         }
 
         return $this->show($id);
@@ -410,7 +410,7 @@ final class AdminUserController extends UserController
             ], 'Blue tick status updated successfully');
         } catch (\Throwable $e) {
             $this->db()->rollBack();
-            $this->fail('Failed to update blue tick status: ' . $e->getMessage(), 500);
+            $this->fail('Failed to update blue tick status.', 500);
         }
     }
 
@@ -450,7 +450,7 @@ final class AdminUserController extends UserController
                 'status' => $newStatus
             ], 'Account visibility updated successfully');
         } catch (\Throwable $e) {
-            $this->fail('Failed to update visibility: ' . $e->getMessage(), 500);
+            $this->fail('Failed to update visibility.', 500);
         }
     }
 
@@ -491,7 +491,7 @@ final class AdminUserController extends UserController
             return ['deleted' => true, 'id' => (int) $id];
         } catch (\Throwable $e) {
             $this->db()->rollBack();
-            $this->fail('Failed to delete user: ' . $e->getMessage(), 500);
+            $this->fail('Failed to delete user.', 500);
             return [];
         }
     }
@@ -704,7 +704,7 @@ final class AdminUserController extends UserController
             return ['permanently_deleted' => true, 'id' => (int) $id];
         } catch (\Throwable $e) {
             $this->db()->rollBack();
-            $this->fail('Failed to permanently delete user: ' . $e->getMessage(), 500);
+            $this->fail('Failed to permanently delete user.', 500);
             return [];
         }
     }

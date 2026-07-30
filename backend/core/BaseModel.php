@@ -192,7 +192,7 @@ abstract class BaseModel
     {
         if ($orderBy === 'RAND()') return $orderBy;
         $identifier = '[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)?';
-        $term = "(?:{$identifier}(?:\\s+(?:ASC|DESC))?|COALESCE\\(\\s*{$identifier}\\s*,\\s*(?:0|[A-Za-z_][A-Za-z0-9_]*)\\s*\\)\\s+(?:ASC|DESC))";
+        $term = "{$identifier}(?:\\s+(?:ASC|DESC))?";
         if (!preg_match('/^\\s*' . $term . '(?:\\s*,\\s*' . $term . ')*\\s*$/i', $orderBy)) {
             throw new \InvalidArgumentException('Unsafe SQL order clause.');
         }

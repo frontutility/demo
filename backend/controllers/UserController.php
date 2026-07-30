@@ -263,7 +263,7 @@ class UserController extends CrudController
             return ['deleted' => true, 'id' => (int) $id];
         } catch (\Throwable $e) {
             $this->db()->rollBack();
-            $this->fail('Failed to delete account: ' . $e->getMessage(), 500);
+            $this->fail('Failed to delete account.', 500);
             return [];
         }
     }
@@ -619,7 +619,7 @@ class UserController extends CrudController
             $this->db()->commit();
         } catch (\Throwable $e) {
             $this->db()->rollBack();
-            $this->fail('Failed to follow user: ' . $e->getMessage(), 500);
+            $this->fail('Failed to follow user.', 500);
             return [];
         }
 
@@ -705,7 +705,7 @@ class UserController extends CrudController
             $this->db()->commit();
         } catch (\Throwable $e) {
             $this->db()->rollBack();
-            $this->fail('Failed to unfollow user: ' . $e->getMessage(), 500);
+            $this->fail('Failed to unfollow user.', 500);
             return [];
         }
 

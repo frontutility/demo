@@ -99,12 +99,15 @@ final class AuthController extends BaseController
                 'firebase_uid' => (string) $claims['sub'],
                 'google_photo' => (string) ($claims['picture'] ?? ''),
                 'google_provider' => 'google.com',
-                'email_verified' => 1,
                 'father_name' => $data['father_name'],
                 'village_id' => $villageId,
                 'date_of_birth' => $data['dob'],
                 'gender' => $gender,
             ]);
+            if ($id > 0) {
+                $stmt = $user->pdo()->prepare('UPDATE users SET email_verified = 1 WHERE id = :id LIMIT 1');
+                $stmt->execute(['id' => $id]);
+            }
         } catch (\PDOException $e) {
             $message = $e->getMessage();
             if (str_contains(strtolower($message), 'duplicate')) {
@@ -162,7 +165,7 @@ final class AuthController extends BaseController
         $stmt->execute(['username' => $username]);
         $user = $stmt->fetch(\PDO::FETCH_ASSOC);
         if (!$user) {
-            $this->fail('User not found.', 404);
+            $this->fail('Username and Password do not match.', 401);
         }
 
         $hash = (string) ($user['password_hash'] ?? '');
@@ -239,13 +242,15 @@ final class AuthController extends BaseController
                 'username' => Username::normalize($data['username'] ?? ''),
                 'email' => $email,
                 'mobile' => $phone,
-                'password_hash' => PasswordService::hash((string) $data['password']),
-                'email_verified' => 1,
                 'father_name' => trim((string) $data['father_name']),
                 'village_id' => $villageId,
                 'date_of_birth' => $data['dob'],
                 'gender' => $gender,
             ]);
+            if ($id > 0) {
+                $stmt = $user->pdo()->prepare('UPDATE users SET password_hash = :hash, email_verified = 1 WHERE id = :id LIMIT 1');
+                $stmt->execute(['hash' => PasswordService::hash((string) $data['password']), 'id' => $id]);
+            }
         } catch (\PDOException $e) {
             error_log('Email registration failed: ' . $e->getMessage());
             $this->fail('Registration failed due to a server error.', 500);
@@ -267,6 +272,7 @@ final class AuthController extends BaseController
         $stmt = (new User())->pdo()->prepare('SELECT id FROM users WHERE deleted_at IS NULL AND email = :email LIMIT 1');
         $stmt->execute(['email' => $email]);
         if (!$stmt->fetch()) {
+            usleep(random_int(200000, 500000));
             $this->json(['email' => $email, 'expires_in_minutes' => self::OTP_TTL_MINUTES], 'If an account exists with this email, an OTP has been sent.');
             return;
         }
@@ -722,20 +728,13 @@ final class AuthController extends BaseController
 
     public function me(): void
     {
-        // This endpoint is also used during app bootstrap to detect an
-        // anonymous browser. Keep that case a normal 200 response instead of
-        // producing a noisy 401 in the console.
         if (session_status() !== PHP_SESSION_ACTIVE && !empty($_COOKIE[session_name()])) {
             session_start();
         }
-        $token = $this->bearerToken();
         $claims = $this->currentUserClaims();
+        $isAdmin = ($claims['type'] ?? 'user') === 'admin';
+        $userId = $isAdmin ? 0 : (isset($claims['sub']) ? (int) $claims['sub'] : 0);
         $user = null;
-        $userId = 0;
-        if (($claims['type'] ?? 'user') === 'admin') {
-            $claims = [];
-        }
-        $userId = isset($claims['sub']) ? (int) $claims['sub'] : 0;
         if ($userId > 0) {
             $user = (new User())->find($userId);
             if ($user) {
@@ -743,8 +742,6 @@ final class AuthController extends BaseController
             }
         }
         $this->json([
-            'token' => $token,
-            'claims' => $claims,
             'user' => $user ? $this->appendProfileMeta($user, $userId) : null,
         ], 'Current session');
     }

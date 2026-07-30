@@ -294,7 +294,7 @@ final class AdminPollController extends PostController
             if ($db->inTransaction()) {
                 $db->rollBack();
             }
-            $this->fail('Could not update poll: ' . $e->getMessage(), 500);
+            $this->fail('Could not update poll.', 500);
         }
     }
 
@@ -442,7 +442,7 @@ final class AdminPollController extends PostController
             if ($db->inTransaction()) {
                 $db->rollBack();
             }
-            $this->fail('Could not update poll results: ' . $e->getMessage(), 500);
+            $this->fail('Could not update poll results.', 500);
         }
     }
 
@@ -568,7 +568,7 @@ final class AdminPollController extends PostController
             if ($db->inTransaction()) {
                 $db->rollBack();
             }
-            $this->fail('Could not permanently delete poll: ' . $e->getMessage(), 500);
+            $this->fail('Could not permanently delete poll.', 500);
         }
     }
 
@@ -601,7 +601,7 @@ final class AdminPollController extends PostController
             if ($db->inTransaction()) {
                 $db->rollBack();
             }
-            $this->fail('Could not reset poll votes: ' . $e->getMessage(), 500);
+            $this->fail('Could not reset poll votes.', 500);
         }
     }
 

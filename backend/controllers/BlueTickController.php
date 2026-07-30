@@ -153,7 +153,7 @@ class BlueTickController extends CrudController
             $this->db()->commit();
         } catch (\Throwable $e) {
             $this->db()->rollBack();
-            $this->fail('Failed to approve blue tick request: ' . $e->getMessage(), 500);
+            $this->fail('Failed to approve blue tick request.', 500);
         }
 
         return $this->model()->find((int) $id) ?? [];
@@ -206,7 +206,7 @@ class BlueTickController extends CrudController
             $this->db()->commit();
         } catch (\Throwable $e) {
             $this->db()->rollBack();
-            $this->fail('Failed to revoke blue tick request: ' . $e->getMessage(), 500);
+            $this->fail('Failed to revoke blue tick request.', 500);
         }
 
         return $this->model()->find((int) $id) ?? [];
