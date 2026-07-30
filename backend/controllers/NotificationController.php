@@ -39,21 +39,7 @@ final class NotificationController extends BaseController
         $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $notifications = array_map(function (array $row) {
-            return [
-                'id' => (int) $row['id'],
-                'recipientUserId' => (int) $row['recipient_user_id'],
-                'actorUserId' => (int) ($row['actor_user_id'] ?? 0),
-                'actorName' => $row['actor_name'] ?? '',
-                'actorUsername' => $row['actor_username'] ?? '',
-                'actorAvatar' => $row['actor_avatar'] ?? '',
-                'type' => $row['notification_type'],
-                'title' => $row['title'],
-                'body' => $row['body'],
-                'entityType' => $row['entity_type'] ?? '',
-                'entityId' => (int) ($row['entity_id'] ?? 0),
-                'isRead' => (bool) ($row['is_read'] ?? 0),
-                'createdAt' => $row['created_at'],
-            ];
+            return $row;
         }, $rows);
 
         $this->json([

@@ -37,7 +37,7 @@ export default function NotificationsPage() {
   const fetchNotifications = useCallback(async () => {
     try {
       const res = await api.get("/api/notifications");
-      const list = res.data?.data ?? res.data?.notifications ?? [];
+      const list = res.data?.data?.notifications ?? res.data?.notifications ?? [];
       setNotifications(Array.isArray(list) ? list : []);
     } catch {
       setNotifications([]);
